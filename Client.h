@@ -11,6 +11,7 @@ friend std::ostream& operator<<(std::ostream& os, const Client& Client);
 private:
     int id;
     Vehicle vehicle;
+    float balance;
 
 public:
     Client( int id, const std::string& name, int age, const std::string& address, const std::string& email, const std::string& phone,

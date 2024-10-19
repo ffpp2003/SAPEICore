@@ -6,7 +6,8 @@ Client::Client(int id, const std::string& name, int age,
                 const std::string& license, const std::string& type,
                 const std::string& color, const std::string& brand,
                 const std::string& model)
-    : Person(name, age, address, email, phone), id(id), vehicle(license, type, color, brand, model) { // Inicializa el vehículo aquí
+    : Person(name, age, address, email, phone), id(id), vehicle(license, type, color, brand, model) {
+    balance = 0;
 }
 
 int Client::getClientID() const {
@@ -24,6 +25,7 @@ void Client::setVehicle(const Vehicle& vehicle) {
 std::ostream& operator<<(std::ostream& os, const Client& client) {
     os << static_cast<const Person&>(client)
     << "ID: " << client.id << std::endl
+    << "Saldo: " << client.balance << std::endl
     << "Vehiculo:" << std::endl 
     << client.vehicle << std::endl;
     return os;
