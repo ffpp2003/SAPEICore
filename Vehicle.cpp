@@ -44,10 +44,10 @@ void Vehicle::setModel(const std::string& model) {
 }
 
 std::ostream& operator<<(std::ostream& os, const Vehicle& vehicle) {
-    os << "Patente: " << vehicle.licensePlate << "\n"
-       << "Tipo: " << vehicle.type << "\n"
-       << "Color: " << vehicle.color << "\n"
-       << "Marca: " << vehicle.brand << "\n"
+    os << "Patente: " << vehicle.licensePlate << std::endl
+       << "Tipo: " << vehicle.type << std::endl
+       << "Color: " << vehicle.color << std::endl
+       << "Marca: " << vehicle.brand << std::endl
        << "Modelo: " << vehicle.model;
     return os;
 }
