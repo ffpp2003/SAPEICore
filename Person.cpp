@@ -1,6 +1,6 @@
 #include "Person.h"
 
- Person::Person(const std::string& name, int age, const std::string& address, const std::string& email, const std::string& phone)
+Person::Person(const std::string& name, int age, const std::string& address, const std::string& email, const std::string& phone)
     : name(name), age(age), address(address), email(email), phone(phone){}
 
 std::string Person::getName() const {
