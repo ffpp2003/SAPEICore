@@ -10,7 +10,7 @@ Client::Client(int id, const std::string& name, int age,
     balance = 0;
 }
 
-int Client::getClientID() const {
+int Client::getId() const {
     return id;
 }
 
@@ -18,7 +18,7 @@ int Client::getBalance() const {
     return balance;
 }
 
-void Client::setClientID(int id) {
+void Client::setId(int id) {
     this->id= id;
 }
 
