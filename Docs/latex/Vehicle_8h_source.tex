@@ -1,0 +1,40 @@
+\hypertarget{Vehicle_8h_source}{}\doxysection{/home/corte/\+Documents/\+SAPEI/\+SAPEICore/\+Vehicle.h}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#ifndef VEHICLE\_H}}
+\DoxyCodeLine{2 \textcolor{preprocessor}{\#define VEHICLE\_H}}
+\DoxyCodeLine{3 }
+\DoxyCodeLine{4 \textcolor{preprocessor}{\#include <iostream>}}
+\DoxyCodeLine{5 \textcolor{preprocessor}{\#include <string>}}
+\DoxyCodeLine{6 }
+\DoxyCodeLine{7 \textcolor{keyword}{class }\mbox{\hyperlink{classVehicle}{Vehicle}} \{}
+\DoxyCodeLine{8 }
+\DoxyCodeLine{9 \textcolor{keyword}{friend} std::ostream\& operator<<(std::ostream\& os, \textcolor{keyword}{const} \mbox{\hyperlink{classVehicle}{Vehicle}}\& vehicle);}
+\DoxyCodeLine{10 }
+\DoxyCodeLine{11 \textcolor{keyword}{private}:}
+\DoxyCodeLine{12     std::string licensePlate;}
+\DoxyCodeLine{13     std::string type;}
+\DoxyCodeLine{14     std::string color;}
+\DoxyCodeLine{15     std::string brand;}
+\DoxyCodeLine{16     std::string model;}
+\DoxyCodeLine{17 }
+\DoxyCodeLine{18 \textcolor{keyword}{public}:}
+\DoxyCodeLine{19     \mbox{\hyperlink{classVehicle}{Vehicle}}(\textcolor{keyword}{const} std::string\& license = \textcolor{stringliteral}{"{}"{}}, \textcolor{keyword}{const} std::string\& type = \textcolor{stringliteral}{"{}"{}}, \textcolor{keyword}{const} std::string\& color = \textcolor{stringliteral}{"{}"{}}, \textcolor{keyword}{const} std::string\& brand = \textcolor{stringliteral}{"{}"{}}, \textcolor{keyword}{const} std::string\& model = \textcolor{stringliteral}{"{}"{}});}
+\DoxyCodeLine{20 }
+\DoxyCodeLine{21     std::string getLicensePlate() \textcolor{keyword}{const};}
+\DoxyCodeLine{22     std::string getType() \textcolor{keyword}{const};}
+\DoxyCodeLine{23     std::string getColor() \textcolor{keyword}{const};}
+\DoxyCodeLine{24     std::string getBrand() \textcolor{keyword}{const};}
+\DoxyCodeLine{25     std::string getModel() \textcolor{keyword}{const};}
+\DoxyCodeLine{26 }
+\DoxyCodeLine{27     \textcolor{keywordtype}{void} setLicensePlate(\textcolor{keyword}{const} std::string\& license);}
+\DoxyCodeLine{28     \textcolor{keywordtype}{void} setType(\textcolor{keyword}{const} std::string\& type);}
+\DoxyCodeLine{29     \textcolor{keywordtype}{void} setColor(\textcolor{keyword}{const} std::string\& color);}
+\DoxyCodeLine{30     \textcolor{keywordtype}{void} setBrand(\textcolor{keyword}{const} std::string\& brand);}
+\DoxyCodeLine{31     \textcolor{keywordtype}{void} setModel(\textcolor{keyword}{const} std::string\& model);}
+\DoxyCodeLine{32 }
+\DoxyCodeLine{33 \};}
+\DoxyCodeLine{34 }
+\DoxyCodeLine{35 \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

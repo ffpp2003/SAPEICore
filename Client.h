@@ -4,14 +4,17 @@
 #include "Person.h"
 #include "Vehicle.h"
 
+/**
+ * @brief Clase para administrar los datos de un cliente
+ */
 class Client : public Person {
 
 friend std::ostream& operator<<(std::ostream& os, const Client& Client);
 
 private:
-    int id;
-    Vehicle vehicle;
-    float balance;
+    int id; /**<ID relacionado a la tarjeta RFID unica de cada cliente*/
+    Vehicle vehicle; /**<Objeto que almacena los datos del vehiculo*/
+    float balance; /**<Lleva el saldo del cliente, en pesos argentinos*/
 
 public:
     Client( int id, const std::string& name, int age = 0, const std::string& address ="", const std::string& email = "",
