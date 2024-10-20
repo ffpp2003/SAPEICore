@@ -14,12 +14,20 @@ int Client::getClientID() const {
     return id;
 }
 
+int Client::getBalance() const {
+    return balance;
+}
+
 void Client::setClientID(int id) {
     this->id= id;
 }
 
 void Client::setVehicle(const Vehicle& vehicle) {
     this->vehicle = vehicle;
+}
+
+void Client::setBalance(float balance){
+    this->balance = balance;
 }
 
 std::ostream& operator<<(std::ostream& os, const Client& client) {
