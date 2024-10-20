@@ -1,5 +1,0 @@
-<map id="Client" name="Client">
-<area shape="rect" id="node1" title="Clase para administrar los datos de un cliente." alt="" coords="54,95,114,121"/>
-<area shape="rect" id="node2" href="$classPerson.html" title=" " alt="" coords="5,5,72,32"/>
-<area shape="rect" id="node3" href="$classVehicle.html" title=" " alt="" coords="96,5,165,32"/>
-</map>
