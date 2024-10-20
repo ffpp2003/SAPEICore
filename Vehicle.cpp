@@ -1,6 +1,6 @@
 #include "Vehicle.h"
 
-Vehicle::Vehicle(const std::string& license, const std::string& type, const std::string& color, const std::string& brand, const std::string& model)
+Vehicle::Vehicle(const std::string& license = "", const std::string& type = "", const std::string& color = "", const std::string& brand = "", const std::string& model = "")
     : licensePlate(license), type(type), color(color), brand(brand), model(model) {
 }
 
