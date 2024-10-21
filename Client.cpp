@@ -18,6 +18,10 @@ int Client::getBalance() const {
     return balance;
 }
 
+Vehicle Client::getVehicle() const{
+  return vehicle;
+}
+
 void Client::setId(int id) {
     this->id= id;
 }
