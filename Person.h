@@ -21,6 +21,8 @@ public:
     std::string getName() const;
     int getAge() const;
     std::string getAddress() const;
+    std::string getEmail() const;
+    std::string getPhone() const;
 
 };
 

@@ -15,6 +15,14 @@ std::string Person::getAddress() const {
     return address;
 }
 
+std::string Person::getEmail() const {
+    return email;
+}
+
+std::string Person::getPhone() const {
+    return phone;
+}
+
 std::ostream& operator<<(std::ostream& os, const Person& person) {
     os << "Nombre: " << person.name << std::endl;
     os << "Edad: " << person.age << std::endl;
