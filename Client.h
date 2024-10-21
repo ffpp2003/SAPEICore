@@ -23,6 +23,7 @@ public:
 
     int getId() const;
     int getBalance() const;
+    Vehicle getVehicle() const;
 
     void setId(int id);
     void setVehicle(const Vehicle& vehicle);
