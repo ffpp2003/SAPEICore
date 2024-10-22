@@ -118,9 +118,10 @@ void DataBase::rmClient(int id) {
 }
 
 void DataBase::showClients() {
-    if (sqlite3_exec(db, "SELECT * FROM client;", callback, nullptr, &errMsg) != SQLITE_OK);
+    if (sqlite3_exec(db, "SELECT * FROM client;", callback, nullptr, &errMsg) != SQLITE_OK){
         throw runtime_error(errMsg);
         sqlite3_free(errMsg);
+    }
 }
 
 void DataBase::showClientById(const int id) {
