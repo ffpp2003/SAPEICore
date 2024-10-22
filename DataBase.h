@@ -23,6 +23,7 @@ public:
     void showClientById(const int);
     void showClientByName(const std::string&);
     void showClients();
+    Client getClientById(int id);
 
     void addVehicle(int client_id, const Vehicle&);
     void rmVehicle(const std::string& license);

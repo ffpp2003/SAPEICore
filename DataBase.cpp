@@ -128,7 +128,7 @@ void DataBase::showClientById(const int id) {
     string sql = "SELECT * FROM client WHERE id = " + to_string(id) + ";";
 
     if (sqlite3_exec(db, sql.c_str(), callback, nullptr, &errMsg) != SQLITE_OK) {
-        cerr << errMsg << endl;
+        throw runtime_error(errMsg);
         sqlite3_free(errMsg);
     }
 }
@@ -137,7 +137,7 @@ void DataBase::showClientByName(const string& name) {
     string sql = "SELECT * FROM client WHERE name = '" + name + "';";
 
     if (sqlite3_exec(db, sql.c_str(), callback, nullptr, &errMsg) != SQLITE_OK) {
-        cerr << errMsg << endl;
+        throw runtime_error(errMsg);
         sqlite3_free(errMsg);
     }
 }
@@ -148,4 +148,42 @@ int DataBase::callback(void* data, int argc, char** argv, char** azColName) {
     }
     cout << endl;
     return 0;
+}
+
+Client DataBase::getClientById(int id) {
+    sqlite3_stmt* stmt;
+    const char* sqlQuery =
+        "SELECT client.id, client.name, client.age, client.address, client.email, client.phone, "
+        "vehicle.license, vehicle.type, vehicle.color, vehicle.brand, vehicle.model "
+        "FROM client "
+        "LEFT JOIN vehicle ON client.id = vehicle.client_id "
+        "WHERE client.id = ?;";
+
+    if (sqlite3_prepare_v2(db, sqlQuery, -1, &stmt, nullptr) != SQLITE_OK) {
+        throw runtime_error(sqlite3_errmsg(db));
+    }
+
+    sqlite3_bind_int(stmt, 1, id);
+    Client client;
+
+    if (sqlite3_step(stmt) == SQLITE_ROW) {
+        int clientId = sqlite3_column_int(stmt, 0);
+        string name(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 1)));
+        int age = sqlite3_column_int(stmt, 2);
+        string address(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 3)));
+        string email(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 4)));
+        string phone(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 5)));
+
+        string license(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 6)));
+        string type(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 7)));
+        string color(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 8)));
+        string brand(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 9)));
+        string model(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 10)));
+
+        client = Client(clientId, name, age, address, email, phone, license, type, color, brand, model);
+    }
+
+    sqlite3_finalize(stmt);
+
+    return client;
 }
