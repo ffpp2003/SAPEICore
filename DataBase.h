@@ -7,10 +7,17 @@
 #include "Client.h"
 #include "Vehicle.h"
 
+/**
+ * @brief Clase para administrar la base de datos
+ *
+ * Esta clase utiliza la SQLite3 para almacenar los datos de los clientes
+ * Permite facilmente interactuar mediante la clase Client
+ *
+ */
 class DataBase {
 private:
-    sqlite3* db;
-    char* errMsg = 0;
+    sqlite3* db; /**<Puntero para interactuar con la base de datos*/
+    char* errMsg = 0; /**<Cadena para guardar los mensajes de error*/
     void createClientTable();
     void createVehicleTable();
 
