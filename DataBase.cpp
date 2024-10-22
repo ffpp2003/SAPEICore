@@ -163,16 +163,18 @@ void DataBase::showVehiclesByClientId(int client_id) {
  * @throws runtime_error Si hay un error al insertar el cliente.
  */
 void DataBase::addClient(const Client& cl) {
-    string sqlInsertar = "INSERT OR IGNORE INTO client (name, age, address, email, phone) VALUES ('" + cl.getName() + "', " +
-        to_string(cl.getAge()) + ", '" + cl.getAddress() + "', '" + cl.getEmail() + "', '" + cl.getPhone() + "');";
-
-    addVehicle(cl.getId(),cl.getVehicle());
+    string sqlInsertar = "INSERT OR IGNORE INTO client (id, name, age, address, email, phone) VALUES (" +
+        to_string(cl.getId()) + ", '" + cl.getName() + "', " + to_string(cl.getAge()) + ", '" +
+        cl.getAddress() + "', '" + cl.getEmail() + "', '" + cl.getPhone() + "');";
 
     if (sqlite3_exec(db, sqlInsertar.c_str(), nullptr, nullptr, &errMsg) != SQLITE_OK) {
         throw runtime_error(errMsg);
         sqlite3_free(errMsg);
     }
+
+    addVehicle(cl.getId(), cl.getVehicle());
 }
+
 
 /**
  * @brief Elimina un cliente de la base de datos por su ID.
