@@ -20,6 +20,7 @@ private:
     char* errMsg = 0; /**<Cadena para guardar los mensajes de error*/
     void createClientTable();
     void createVehicleTable();
+    static int callback(void* data, int argc, char** argv, char** azColName);
 
 public:
     DataBase(const std::string& dbName);
@@ -38,8 +39,6 @@ public:
     void showVehicles();
     void showVehicleByLicense(const std::string& license);
     void showVehiclesByClientId(int client_id);
-
-    static int callback(void* data, int argc, char** argv, char** azColName);
 };
 
 #endif // DATABASE_H
