@@ -54,7 +54,7 @@ void DataBase::createVehicleTable(){
 }
 
 void DataBase::addVehicle(int client_id, const Vehicle& vh) {
-    string sqlInsertar = "INSERT INTO vehicle (license, client_id, type, color, brand, model) VALUES ('" +
+    string sqlInsertar = "INSERT OR IGNORE INTO vehicle (license, client_id, type, color, brand, model) VALUES ('" +
         vh.getLicensePlate() + "', " + to_string(client_id) + ", '" + vh.getType() + "', '" + vh.getColor() +
         "', '" + vh.getBrand() + "', '" + vh.getModel() + "');";
 
@@ -98,7 +98,7 @@ void DataBase::showVehiclesByClientId(int client_id) {
 }
 
 void DataBase::addClient(const Client& cl) {
-    string sqlInsertar = "INSERT INTO client (name, age, address, email, phone) VALUES ('" + cl.getName() + "', " + 
+    string sqlInsertar = "INSERT OR IGNORE INTO client (name, age, address, email, phone) VALUES ('" + cl.getName() + "', " +
         to_string(cl.getAge()) + ", '" + cl.getAddress() + "', '" + cl.getEmail() + "', '" + cl.getPhone() + "');";
 
     addVehicle(cl.getId(),cl.getVehicle());
