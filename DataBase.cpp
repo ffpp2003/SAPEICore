@@ -187,3 +187,41 @@ Client DataBase::getClientById(int id) {
 
     return client;
 }
+
+Client DataBase::getClientByName(string name) {
+    sqlite3_stmt* stmt;
+    const char* sqlQuery =
+        "SELECT client.id, client.name, client.age, client.address, client.email, client.phone, "
+        "vehicle.license, vehicle.type, vehicle.color, vehicle.brand, vehicle.model "
+        "FROM client "
+        "LEFT JOIN vehicle ON client.id = vehicle.client_id "
+        "WHERE client.name = ?;";
+
+    if (sqlite3_prepare_v2(db, sqlQuery, -1, &stmt, nullptr) != SQLITE_OK) {
+        throw runtime_error(sqlite3_errmsg(db));
+    }
+
+    sqlite3_bind_text(stmt, 1, name.c_str(), -1, SQLITE_STATIC);
+    Client client;
+
+    if (sqlite3_step(stmt) == SQLITE_ROW) {
+        int clientId = sqlite3_column_int(stmt, 0);
+        string name(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 1)));
+        int age = sqlite3_column_int(stmt, 2);
+        string address(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 3)));
+        string email(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 4)));
+        string phone(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 5)));
+
+        string license(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 6)));
+        string type(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 7)));
+        string color(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 8)));
+        string brand(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 9)));
+        string model(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 10)));
+
+        client = Client(clientId, name, age, address, email, phone, license, type, color, brand, model);
+    }
+
+    sqlite3_finalize(stmt);
+
+    return client;
+}

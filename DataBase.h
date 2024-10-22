@@ -24,6 +24,7 @@ public:
     void showClientByName(const std::string&);
     void showClients();
     Client getClientById(int id);
+    Client getClientByName(std::string name);
 
     void addVehicle(int client_id, const Vehicle&);
     void rmVehicle(const std::string& license);
