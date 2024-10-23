@@ -89,11 +89,15 @@ void DataBase::createVehicleTable(){
  * @throws runtime_error Si hay un error al insertar el vehículo.
  */
 void DataBase::addVehicle(int client_id, const Vehicle& vh) {
-    string sqlInsertar = "INSERT OR IGNORE INTO vehicle (license, client_id, type, color, brand, model) VALUES ('" +
-        vh.getLicensePlate() + "', " + to_string(client_id) + ", '" + vh.getType() + "', '" + vh.getColor() +
-        "', '" + vh.getBrand() + "', '" + vh.getModel() + "');";
+    string sqlInsert = "INSERT OR IGNORE INTO vehicle (license, client_id, type, color, brand, model) VALUES ('"
+      + vh.getLicensePlate() + "', "
+      + to_string(client_id) + ", '"
+      + vh.getType() + "', '"
+      + vh.getColor() + "', '"
+      + vh.getBrand() + "', '"
+      + vh.getModel() + "');";
 
-    if (sqlite3_exec(db, sqlInsertar.c_str(), nullptr, nullptr, &errMsg) != SQLITE_OK) {
+    if (sqlite3_exec(db, sqlInsert.c_str(), nullptr, nullptr, &errMsg) != SQLITE_OK) {
         throw runtime_error(errMsg);
         sqlite3_free(errMsg);
     }
