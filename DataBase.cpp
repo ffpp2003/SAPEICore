@@ -355,3 +355,18 @@ Client DataBase::getClientByName(string name) {
 
     return client;
 }
+
+void DataBase::updateBalance(int id, double balance){
+    sqlite3_stmt* stmt;
+    const char* sqlQuery = "UPDATE client SET balance = ? WHERE id = ?";
+
+    if (sqlite3_prepare_v2(db, sqlQuery, -1, &stmt, nullptr) != SQLITE_OK) {
+        throw runtime_error(sqlite3_errmsg(db));
+    }
+
+    sqlite3_bind_double(stmt, 1, balance);
+    sqlite3_bind_int(stmt, 2, id);
+
+    sqlite3_step(stmt);
+    sqlite3_finalize(stmt);
+}
