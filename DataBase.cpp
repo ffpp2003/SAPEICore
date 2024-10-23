@@ -40,6 +40,7 @@ void DataBase::createClientTable(){
     const char* sqlCreateClientTable =
         "CREATE TABLE IF NOT EXISTS client ("
         "id INTEGER PRIMARY KEY,"
+        "balance FLOAT NOT NULL,"
         "name TEXT NOT NULL,"
         "age INTEGER NOT NULL,"
         "address TEXT,"
