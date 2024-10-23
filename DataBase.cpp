@@ -40,7 +40,7 @@ void DataBase::createClientTable(){
     const char* sqlCreateClientTable =
         "CREATE TABLE IF NOT EXISTS client ("
         "id INTEGER PRIMARY KEY,"
-        "balance FLOAT NOT NULL,"
+        "balance REAL NOT NULL,"
         "name TEXT NOT NULL,"
         "age INTEGER NOT NULL,"
         "address TEXT,"
@@ -164,7 +164,7 @@ void DataBase::showVehiclesByClientId(int client_id) {
  * @throws runtime_error Si hay un error al insertar el cliente.
  */
 void DataBase::addClient(const Client& cl) {
-    string sqlInsertar = "INSERT OR IGNORE INTO client (id, balance, name, age, address, email, phone) VALUES ("
+    string sqlInsert = "INSERT OR IGNORE INTO client (id, balance, name, age, address, email, phone) VALUES ("
         + to_string(cl.getId()) + ", "
         + to_string(cl.getBalance()) + ", '"
         + cl.getName() + "', "
@@ -173,7 +173,7 @@ void DataBase::addClient(const Client& cl) {
         + cl.getEmail() + "', '"
         + cl.getPhone() + "');";
 
-    if (sqlite3_exec(db, sqlInsertar.c_str(), nullptr, nullptr, &errMsg) != SQLITE_OK) {
+    if (sqlite3_exec(db, sqlInsert.c_str(), nullptr, nullptr, &errMsg) != SQLITE_OK) {
         throw runtime_error(errMsg);
         sqlite3_free(errMsg);
     }
