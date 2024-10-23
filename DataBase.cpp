@@ -271,7 +271,8 @@ Client DataBase::getClientById(int id) {
     sqlite3_stmt* stmt;
     const char* sqlQuery =
         "SELECT client.id, client.name, client.age, client.address, client.email, client.phone, "
-        "vehicle.license, vehicle.type, vehicle.color, vehicle.brand, vehicle.model "
+        "vehicle.license, vehicle.type, vehicle.color, vehicle.brand, vehicle.model, "
+        "client.balance "
         "FROM client "
         "LEFT JOIN vehicle ON client.id = vehicle.client_id "
         "WHERE client.id = ?;";
@@ -296,8 +297,10 @@ Client DataBase::getClientById(int id) {
         string color(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 8)));
         string brand(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 9)));
         string model(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 10)));
+        double balance = sqlite3_column_double(stmt, 11);
 
         client = Client(clientId, name, age, address, email, phone, license, type, color, brand, model);
+        client.setBalance(balance);
     }
 
     sqlite3_finalize(stmt);
@@ -316,7 +319,8 @@ Client DataBase::getClientByName(string name) {
     sqlite3_stmt* stmt;
     const char* sqlQuery =
         "SELECT client.id, client.name, client.age, client.address, client.email, client.phone, "
-        "vehicle.license, vehicle.type, vehicle.color, vehicle.brand, vehicle.model "
+        "vehicle.license, vehicle.type, vehicle.color, vehicle.brand, vehicle.model, "
+        "client.balance "
         "FROM client "
         "LEFT JOIN vehicle ON client.id = vehicle.client_id "
         "WHERE client.name = ?;";
@@ -341,8 +345,10 @@ Client DataBase::getClientByName(string name) {
         string color(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 8)));
         string brand(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 9)));
         string model(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 10)));
+        double balance = sqlite3_column_double(stmt, 11);
 
         client = Client(clientId, name, age, address, email, phone, license, type, color, brand, model);
+        client.setBalance(balance);
     }
 
     sqlite3_finalize(stmt);
