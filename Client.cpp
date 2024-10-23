@@ -1,6 +1,6 @@
 #include "Client.h"
 
-Client::Client(int id, const std::string& name, int age,
+Client::Client(unsigned long long id, const std::string& name, int age,
                 const std::string& address,
                 const std::string& email, const std::string& phone,
                 const std::string& license, const std::string& type,
@@ -10,7 +10,7 @@ Client::Client(int id, const std::string& name, int age,
     balance = 0;
 }
 
-int Client::getId() const {
+unsigned long long Client::getId() const {
     return id;
 }
 
@@ -22,7 +22,7 @@ Vehicle Client::getVehicle() const{
   return vehicle;
 }
 
-void Client::setId(int id) {
+void Client::setId(unsigned long long id) {
     this->id= id;
 }
 
