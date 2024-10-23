@@ -23,7 +23,7 @@ private:
     static int callback(void* data, int argc, char** argv, char** azColName);
 
 public:
-    DataBase(const std::string& dbName);
+    DataBase(const std::string& dbName = "SAPEI.db");
     ~DataBase();
 
     void addClient(const Client&);
@@ -31,6 +31,8 @@ public:
     void showClientById(const int);
     void showClientByName(const std::string&);
     void showClients();
+    void updateBalance(int id, double balance);
+    double getBalance(int id);
     Client getClientById(int id);
     Client getClientByName(std::string name);
 

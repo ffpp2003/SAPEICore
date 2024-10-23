@@ -40,6 +40,7 @@ void DataBase::createClientTable(){
     const char* sqlCreateClientTable =
         "CREATE TABLE IF NOT EXISTS client ("
         "id INTEGER PRIMARY KEY,"
+        "balance REAL NOT NULL,"
         "name TEXT NOT NULL,"
         "age INTEGER NOT NULL,"
         "address TEXT,"
@@ -88,11 +89,15 @@ void DataBase::createVehicleTable(){
  * @throws runtime_error Si hay un error al insertar el vehículo.
  */
 void DataBase::addVehicle(int client_id, const Vehicle& vh) {
-    string sqlInsertar = "INSERT OR IGNORE INTO vehicle (license, client_id, type, color, brand, model) VALUES ('" +
-        vh.getLicensePlate() + "', " + to_string(client_id) + ", '" + vh.getType() + "', '" + vh.getColor() +
-        "', '" + vh.getBrand() + "', '" + vh.getModel() + "');";
+    string sqlInsert = "INSERT OR IGNORE INTO vehicle (license, client_id, type, color, brand, model) VALUES ('"
+      + vh.getLicensePlate() + "', "
+      + to_string(client_id) + ", '"
+      + vh.getType() + "', '"
+      + vh.getColor() + "', '"
+      + vh.getBrand() + "', '"
+      + vh.getModel() + "');";
 
-    if (sqlite3_exec(db, sqlInsertar.c_str(), nullptr, nullptr, &errMsg) != SQLITE_OK) {
+    if (sqlite3_exec(db, sqlInsert.c_str(), nullptr, nullptr, &errMsg) != SQLITE_OK) {
         throw runtime_error(errMsg);
         sqlite3_free(errMsg);
     }
@@ -163,11 +168,16 @@ void DataBase::showVehiclesByClientId(int client_id) {
  * @throws runtime_error Si hay un error al insertar el cliente.
  */
 void DataBase::addClient(const Client& cl) {
-    string sqlInsertar = "INSERT OR IGNORE INTO client (id, name, age, address, email, phone) VALUES (" +
-        to_string(cl.getId()) + ", '" + cl.getName() + "', " + to_string(cl.getAge()) + ", '" +
-        cl.getAddress() + "', '" + cl.getEmail() + "', '" + cl.getPhone() + "');";
+    string sqlInsert = "INSERT OR IGNORE INTO client (id, balance, name, age, address, email, phone) VALUES ("
+        + to_string(cl.getId()) + ", "
+        + to_string(cl.getBalance()) + ", '"
+        + cl.getName() + "', "
+        + to_string(cl.getAge()) + ", '"
+        + cl.getAddress() + "', '"
+        + cl.getEmail() + "', '"
+        + cl.getPhone() + "');";
 
-    if (sqlite3_exec(db, sqlInsertar.c_str(), nullptr, nullptr, &errMsg) != SQLITE_OK) {
+    if (sqlite3_exec(db, sqlInsert.c_str(), nullptr, nullptr, &errMsg) != SQLITE_OK) {
         throw runtime_error(errMsg);
         sqlite3_free(errMsg);
     }
@@ -265,7 +275,8 @@ Client DataBase::getClientById(int id) {
     sqlite3_stmt* stmt;
     const char* sqlQuery =
         "SELECT client.id, client.name, client.age, client.address, client.email, client.phone, "
-        "vehicle.license, vehicle.type, vehicle.color, vehicle.brand, vehicle.model "
+        "vehicle.license, vehicle.type, vehicle.color, vehicle.brand, vehicle.model, "
+        "client.balance "
         "FROM client "
         "LEFT JOIN vehicle ON client.id = vehicle.client_id "
         "WHERE client.id = ?;";
@@ -290,8 +301,10 @@ Client DataBase::getClientById(int id) {
         string color(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 8)));
         string brand(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 9)));
         string model(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 10)));
+        double balance = sqlite3_column_double(stmt, 11);
 
         client = Client(clientId, name, age, address, email, phone, license, type, color, brand, model);
+        client.setBalance(balance);
     }
 
     sqlite3_finalize(stmt);
@@ -310,7 +323,8 @@ Client DataBase::getClientByName(string name) {
     sqlite3_stmt* stmt;
     const char* sqlQuery =
         "SELECT client.id, client.name, client.age, client.address, client.email, client.phone, "
-        "vehicle.license, vehicle.type, vehicle.color, vehicle.brand, vehicle.model "
+        "vehicle.license, vehicle.type, vehicle.color, vehicle.brand, vehicle.model, "
+        "client.balance "
         "FROM client "
         "LEFT JOIN vehicle ON client.id = vehicle.client_id "
         "WHERE client.name = ?;";
@@ -335,11 +349,48 @@ Client DataBase::getClientByName(string name) {
         string color(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 8)));
         string brand(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 9)));
         string model(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 10)));
+        double balance = sqlite3_column_double(stmt, 11);
 
         client = Client(clientId, name, age, address, email, phone, license, type, color, brand, model);
+        client.setBalance(balance);
     }
 
     sqlite3_finalize(stmt);
 
     return client;
+}
+
+void DataBase::updateBalance(int id, double balance){
+    sqlite3_stmt* stmt;
+    const char* sqlQuery = "UPDATE client SET balance = ? WHERE id = ?";
+
+    if (sqlite3_prepare_v2(db, sqlQuery, -1, &stmt, nullptr) != SQLITE_OK) {
+        throw runtime_error(sqlite3_errmsg(db));
+    }
+
+    sqlite3_bind_double(stmt, 1, balance);
+    sqlite3_bind_int(stmt, 2, id);
+
+    sqlite3_step(stmt);
+    sqlite3_finalize(stmt);
+}
+
+double DataBase::getBalance(int id){
+    sqlite3_stmt* stmt;
+    double balance;
+    const char* sqlQuery = "SELECT client.balance FROM client WHERE id = ?";
+
+    if (sqlite3_prepare_v2(db, sqlQuery, -1, &stmt, nullptr) != SQLITE_OK) {
+        throw runtime_error(sqlite3_errmsg(db));
+    }
+
+    sqlite3_bind_int(stmt, 1, id);
+
+    if (sqlite3_step(stmt) == SQLITE_ROW)
+        balance = sqlite3_column_double(stmt, 0);
+
+
+    sqlite3_finalize(stmt);
+
+    return balance;
 }
