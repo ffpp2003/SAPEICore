@@ -370,3 +370,23 @@ void DataBase::updateBalance(int id, double balance){
     sqlite3_step(stmt);
     sqlite3_finalize(stmt);
 }
+
+double DataBase::getBalance(int id){
+    sqlite3_stmt* stmt;
+    double balance;
+    const char* sqlQuery = "SELECT client.balance FROM client WHERE id = ?";
+
+    if (sqlite3_prepare_v2(db, sqlQuery, -1, &stmt, nullptr) != SQLITE_OK) {
+        throw runtime_error(sqlite3_errmsg(db));
+    }
+
+    sqlite3_bind_int(stmt, 1, id);
+
+    if (sqlite3_step(stmt) == SQLITE_ROW)
+        balance = sqlite3_column_double(stmt, 0);
+
+
+    sqlite3_finalize(stmt);
+
+    return balance;
+}

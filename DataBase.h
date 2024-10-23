@@ -32,6 +32,7 @@ public:
     void showClientByName(const std::string&);
     void showClients();
     void updateBalance(int id, double balance);
+    double getBalance(int id);
     Client getClientById(int id);
     Client getClientByName(std::string name);
 
