@@ -14,7 +14,7 @@ int Client::getId() const {
     return id;
 }
 
-int Client::getBalance() const {
+double Client::getBalance() const {
     return balance;
 }
 
@@ -30,7 +30,7 @@ void Client::setVehicle(const Vehicle& vehicle) {
     this->vehicle = vehicle;
 }
 
-void Client::setBalance(float balance){
+void Client::setBalance(double balance){
     this->balance = balance;
 }
 
