@@ -3,25 +3,34 @@
 
 #include <string>
 
-#define DATABASE_ERROR 0
-#define SERVER_ERROR 0
+enum errorCode{
+    //Database errors
+    DB_CLIENT_NOT_FOUND,
+    DB_VEHICLE_NOT_FOUND,
+    DB_DUPLICATE_CLIENT,
+    DB_DUPLICATE_VEHICLE,
+    //Client Errors
+    CL_SERVER_TIMEOUT = 100,
+};
 
-const std::string errLib[][98] = {
+
+const std::string errLib[][99] = {
     {
-        //DATABASE_ERROR
-        "Cliente no encontrado",        //001
-        "Vehiculo no encontrado",       //002
-        "Cliente existente",            //003
-        "Vehiculo existente",           //004
+        //DATABASE_ERROR [000 - 099]
+        "Cliente no encontrado",        //000
+        "Vehiculo no encontrado",       //001
+        "Cliente existente",            //002
+        "Vehiculo existente",           //003
     },
     {
-        //SERVER_ERROR
+        //CLIENT_ERROR  [100 - 199]
+        "No se pudo conectar con el servidor"
     }
 };
 
 std::string getErrMsg(int error){
     int errType = error / 100;
-    int errId = error % 100 - 1;
+    int errId = error % 100;
     return errLib[errType][errId];
 }
 
