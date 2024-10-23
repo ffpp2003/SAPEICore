@@ -23,7 +23,7 @@ private:
     static int callback(void* data, int argc, char** argv, char** azColName);
 
 public:
-    DataBase(const std::string& dbName);
+    DataBase(const std::string& dbName = "SAPEI.db");
     ~DataBase();
 
     void addClient(const Client&);
