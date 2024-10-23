@@ -3,15 +3,27 @@
 
 #include <string>
 
-struct Error {
-    int code;
-    std::string message;
+#define DATABASE_ERROR 0
+#define SERVER_ERROR 0
+
+const std::string errLib[][98] = {
+    {
+        //DATABASE_ERROR
+        "Cliente no encontrado",        //001
+        "Vehiculo no encontrado",       //002
+        "Cliente existente",            //003
+        "Vehiculo existente",           //004
+    },
+    {
+        //SERVER_ERROR
+    }
 };
 
-//1XX related to Database
-const Error ERROR_100 = {101, "Error 100: No encontrado."};
-const Error ERROR_101 = {101, "Error 101: Cliente existente."};
-const Error ERROR_102 = {102, "Error 102: Cliente inexistente."};
+std::string getErrMsg(int error){
+    int errType = error / 100;
+    int errId = error % 100 - 1;
+    return errLib[errType][errId];
+}
 
 #endif // ERRORS_H
 
