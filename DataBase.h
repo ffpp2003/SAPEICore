@@ -4,6 +4,7 @@
 #include <iostream>
 #include <sqlite3.h>
 #include <string>
+#include <fstream>
 #include "Client.h"
 #include "Vehicle.h"
 
@@ -41,6 +42,11 @@ public:
     void showVehicles();
     void showVehicleByLicense(const std::string& license);
     void showVehiclesByClientId(int client_id);
+
+    void exportTableToCSV(const std::string& tableName, const std::string& outputFIle);
+    void exportClientsToCSV();
+    void exportVehiclesToCSV();
+
 };
 
 #endif // DATABASE_H
