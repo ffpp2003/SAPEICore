@@ -21,7 +21,7 @@ private:
     char* errMsg = 0; /**<Cadena para guardar los mensajes de error*/
     void createClientTable();
     void createVehicleTable();
-    void exportTableToCSV(const std::string& tableName, const std::string& outputFIle);
+    void exportTableToCSV(const std::string& tableName, const std::string& outputFile);
     static int callback(void* data, int argc, char** argv, char** azColName);
 
 public:
@@ -44,8 +44,8 @@ public:
     void showVehicleByLicense(const std::string& license);
     void showVehiclesByClientId(int client_id);
 
-    void exportClientsToCSV();
-    void exportVehiclesToCSV();
+    void exportClientsToCSV(const std::string& = "clientes.csv");
+    void exportVehiclesToCSV(const std::string& = "vehiculos.csv");
 };
 
 #endif // DATABASE_H

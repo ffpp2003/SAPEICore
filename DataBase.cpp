@@ -397,7 +397,6 @@ double DataBase::getBalance(int id){
 
 }
 
-
 /**
  * @brief Exporta una tabla a un archivo CSV.
  *
@@ -443,19 +442,13 @@ void DataBase::exportTableToCSV(const std::string& tableName, const std::string&
 /**
  * @brief Exporta la tabla de clientes a un archivo CSV.
  */
-void DataBase::exportClientsToCSV() {
+void DataBase::exportClientsToCSV(const std::string&){
     exportTableToCSV("client", "clients.csv");
 }
 
 /**
  * @brief Exporta la tabla de vehículos a un archivo CSV.
  */
-void DataBase::exportVehiclesToCSV() {
+void DataBase::exportVehiclesToCSV(const std::string&){
     exportTableToCSV("vehicle", "vehicles.csv");
 }
-
-
-
-
-
-
