@@ -1,12 +1,13 @@
 #include "Client.h"
 
 Client::Client(unsigned long long id, const std::string& name, int age,
+		unsigned int dni,
                 const std::string& address,
                 const std::string& email, const std::string& phone,
                 const std::string& license, const std::string& type,
                 const std::string& color, const std::string& brand,
                 const std::string& model)
-    : Person(name, age, address, email, phone), id(id), vehicle(license, type, color, brand, model) {
+    : Person(name, age, dni, address, email, phone), id(id), vehicle(license, type, color, brand, model) {
     balance = 0;
 }
 
