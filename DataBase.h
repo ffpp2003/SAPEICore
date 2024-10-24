@@ -4,6 +4,7 @@
 #include <iostream>
 #include <sqlite3.h>
 #include <string>
+#include <fstream>
 #include "Client.h"
 #include "Vehicle.h"
 
@@ -20,6 +21,7 @@ private:
     char* errMsg = 0; /**<Cadena para guardar los mensajes de error*/
     void createClientTable();
     void createVehicleTable();
+    void exportTableToCSV(const std::string& tableName, const std::string& outputFile);
     static int callback(void* data, int argc, char** argv, char** azColName);
 
 public:
@@ -41,6 +43,9 @@ public:
     void showVehicles();
     void showVehicleByLicense(const std::string& license);
     void showVehiclesByClientId(int client_id);
+
+    void exportClientsToCSV(const std::string& = "clientes.csv");
+    void exportVehiclesToCSV(const std::string& = "vehiculos.csv");
 };
 
 #endif // DATABASE_H

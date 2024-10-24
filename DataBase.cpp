@@ -393,4 +393,62 @@ double DataBase::getBalance(int id){
     sqlite3_finalize(stmt);
 
     return balance;
+
+
+}
+
+/**
+ * @brief Exporta una tabla a un archivo CSV.
+ *
+ * @param tableName El nombre de la tabla a exportar (ej: "client", "vehicle").
+ * @param outputFile El nombre del archivo CSV al que se exportarán los datos.
+ * @throws runtime_error Si ocurre un error en la consulta o al escribir el archivo.
+ */
+void DataBase::exportTableToCSV(const std::string& tableName, const std::string& outputFile) {
+    std::ofstream file(outputFile);
+    if (!file.is_open()) {
+        throw std::runtime_error("Error al abrir el archivo para escribir.");
+    }
+
+    std::string sqlQuery = "SELECT * FROM " + tableName + ";";
+    sqlite3_stmt* stmt;
+
+    if (sqlite3_prepare_v2(db, sqlQuery.c_str(), -1, &stmt, nullptr) != SQLITE_OK) {
+        throw std::runtime_error(sqlite3_errmsg(db));
+    }
+
+    // Escribir los nombres de las columnas en la primera línea del CSV
+    int numCols = sqlite3_column_count(stmt);
+    for (int i = 0; i < numCols; i++) {
+        file << sqlite3_column_name(stmt, i);
+        if (i < numCols - 1) file << ",";
+    }
+    file << "\n";  // Nueva línea después de las cabeceras
+
+    // Escribir los datos de las filas
+    while (sqlite3_step(stmt) == SQLITE_ROW) {
+        for (int i = 0; i < numCols; i++) {
+            const char* colValue = reinterpret_cast<const char*>(sqlite3_column_text(stmt, i));
+            file << (colValue ? colValue : "NULL");  // Manejar valores NULL
+            if (i < numCols - 1) file << ",";
+        }
+        file << "\n";  // Nueva línea después de cada fila
+    }
+
+    sqlite3_finalize(stmt);
+    file.close();
+}
+
+/**
+ * @brief Exporta la tabla de clientes a un archivo CSV.
+ */
+void DataBase::exportClientsToCSV(const std::string&){
+    exportTableToCSV("client", "clients.csv");
+}
+
+/**
+ * @brief Exporta la tabla de vehículos a un archivo CSV.
+ */
+void DataBase::exportVehiclesToCSV(const std::string&){
+    exportTableToCSV("vehicle", "vehicles.csv");
 }
