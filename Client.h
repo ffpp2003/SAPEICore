@@ -28,7 +28,7 @@ public:
 
     void setId(unsigned long long id);
     void addVehicle(const Vehicle& vehicle);
-    void removeVehicleByPos(int vehiclePos);
+    int removeVehicleByPos(int vehiclePos);
     int removeVehicleByLicense(std::string license);
     void setBalance(double balance);
 };

@@ -33,9 +33,13 @@ void Client::addVehicle(const Vehicle& vehicle) {
     vehicleVector.push_back(vehicle);
 }
 
-void Client::removeVehicleByPos(int vehiclePos){
-  if(vehiclePos > 0 && vehiclePos <= vehicleVector.size())
+int Client::removeVehicleByPos(int vehiclePos){
+  int vehicleFound = 0;
+  if(vehiclePos > 0 && vehiclePos <= vehicleVector.size()){
     vehicleVector.erase(vehicleVector.begin() + vehiclePos-1);
+    vehicleFound = 1;
+  }
+  return vehicleFound;
 }
 
 int Client::removeVehicleByLicense(std::string license){
