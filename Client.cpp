@@ -9,8 +9,10 @@ Client::Client(unsigned long long id, const std::string& name, int age,
                 const std::string& model)
     : Person(name, age, address, email, phone), id(id){
     balance = 0;
-    Vehicle firstVehicle(license, type, color, brand, model);
-    vehicleVector.push_back(firstVehicle);
+    if(license != ""){
+      Vehicle firstVehicle(license, type, color, brand, model);
+      vehicleVector.push_back(firstVehicle);
+    }
 }
 
 unsigned long long Client::getId() const {
