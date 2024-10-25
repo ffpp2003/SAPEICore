@@ -1,4 +1,5 @@
 #include "Client.h"
+#include "Error.h"
 #include "Vehicle.h"
 
 Client::Client(unsigned long long id, const std::string& name, int age,
@@ -36,7 +37,7 @@ void Client::addVehicle(const Vehicle& vehicle) {
 }
 
 int Client::removeVehicleByPos(int vehiclePos){
-  int vehicleFound = 0;
+  int vehicleFound = CL_VEHICLE_NOT_FOUND;
   if(vehiclePos > 0 && vehiclePos <= vehicleVector.size()){
     vehicleVector.erase(vehicleVector.begin() + vehiclePos-1);
     vehicleFound = 1;
@@ -45,7 +46,7 @@ int Client::removeVehicleByPos(int vehiclePos){
 }
 
 int Client::removeVehicleByLicense(std::string license){
-  int i = 0, vehicleFound = 0;
+  int i = 0, vehicleFound = CL_VEHICLE_NOT_FOUND;
   for(i; i < vehicleVector.size(); i++)
     if(vehicleVector[i].getLicensePlate() == license){
       vehicleVector.erase(vehicleVector.begin() + i);
