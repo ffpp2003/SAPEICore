@@ -1,0 +1,26 @@
+name: Compilation check
+
+on:
+  pull_request:
+    branches:
+      - main  # Cambia esta rama si es necesario
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up C++ environment
+        uses: actions/setup-cpp@v1
+        with:
+          compiler: gcc
+
+      - name: Install SQLite
+        run: sudo apt-get install -y libsqlite3-dev
+
+      - name: Compile project
+        run: |
+          g++ -c *.cpp -lsqlite3
