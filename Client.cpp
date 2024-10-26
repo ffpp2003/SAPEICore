@@ -40,7 +40,7 @@ int Client::removeVehicleByPos(int vehiclePos){
   int vehicleFound = CL_VEHICLE_NOT_FOUND;
   if(vehiclePos > 0 && vehiclePos <= vehicleVector.size()){
     vehicleVector.erase(vehicleVector.begin() + vehiclePos-1);
-    vehicleFound = 1;
+    vehicleFound = 0;
   }
   return vehicleFound;
 }
@@ -50,7 +50,7 @@ int Client::removeVehicleByLicense(std::string license){
   for(i; i < vehicleVector.size(); i++)
     if(vehicleVector[i].getLicensePlate() == license){
       vehicleVector.erase(vehicleVector.begin() + i);
-      vehicleFound = 1;
+      vehicleFound = 0;
     }
   return vehicleFound;
 }
