@@ -321,7 +321,7 @@ Client DataBase::getClientById(int id) {
             string model(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 10)));
 
             Vehicle vehicle(license, type, color, brand, model);
-            client.addVehicle(vehicle);  // Assuming Client has an addVehicle() method
+            client.addVehicle(vehicle);
         }
     }
 
