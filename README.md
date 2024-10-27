@@ -1,6 +1,6 @@
 # Dependencias
 
-Para generar utilizar estas biblotecas necesitas:
+Para utilizar estas biblotecas necesitas:
 ```
 sudo apt install sqlite3
 ```
