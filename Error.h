@@ -11,7 +11,6 @@ enum errorCode{
     DB_DUPLICATE_VEHICLE,
     //Client Errors
     CL_SERVER_TIMEOUT = 100,
-    CL_VEHICLE_NOT_FOUND,
 };
 
 
@@ -25,8 +24,7 @@ const std::string errLib[][99] = {
     },
     {
         //CLIENT_ERROR  [100 - 199]
-        "No se pudo conectar con el servidor" //100
-        "El vehiculo solicitado no existe"    //101
+        "No se pudo conectar con el servidor"
     }
 };
 
@@ -37,4 +35,5 @@ std::string getErrMsg(int error){
 }
 
 #endif // ERRORS_H
+
 
