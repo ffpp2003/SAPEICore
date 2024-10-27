@@ -2,6 +2,7 @@
 #define DATABASE_H
 
 #include <iostream>
+#include <vector>
 #include <sqlite3.h>
 #include <string>
 #include <fstream>
@@ -20,6 +21,8 @@ private:
     sqlite3* db; /**<Puntero para interactuar con la base de datos*/
     char* errMsg = 0; /**<Cadena para guardar los mensajes de error*/
     void createClientTable();
+    void addVehicle(int client_id, const Vehicle&);
+    void addMultipleVehicles(int client_id, const std::vector<Vehicle>&);
     void createVehicleTable();
     void exportTableToCSV(const std::string& tableName, const std::string& outputFile);
     static int callback(void* data, int argc, char** argv, char** azColName);
@@ -38,7 +41,6 @@ public:
     Client getClientById(int id);
     Client getClientByName(std::string name);
 
-    void addVehicle(int client_id, const Vehicle&);
     void rmVehicle(const std::string& license);
     void showVehicles();
     void showVehicleByLicense(const std::string& license);

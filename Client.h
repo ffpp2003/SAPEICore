@@ -3,6 +3,7 @@
 
 #include "Person.h"
 #include "Vehicle.h"
+#include <vector>
 
 /**
  * @brief Clase para administrar los datos de un cliente
@@ -13,7 +14,7 @@ friend std::ostream& operator<<(std::ostream& os, const Client& Client);
 
 private:
     unsigned long long id; /**<ID relacionado a la tarjeta RFID unica de cada cliente*/
-    Vehicle vehicle; /**<Objeto que almacena los datos del vehiculo*/
+    std::vector<Vehicle> vehicleVector; /**<Vector que almacena objetos con los datos del vehiculo*/
     double balance; /**<Lleva el saldo del cliente, en pesos argentinos*/
 
 public:
@@ -23,10 +24,12 @@ public:
 
     unsigned long long getId() const;
     double getBalance() const;
-    Vehicle getVehicle() const;
+    std::vector<Vehicle> getVehicles() const;
 
     void setId(unsigned long long id);
-    void setVehicle(const Vehicle& vehicle);
+    void addVehicle(const Vehicle& vehicle);
+    void removeVehicleByPos(int vehiclePos);
+    void removeVehicleByLicense(std::string license);
     void setBalance(double balance);
 };
 
