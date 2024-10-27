@@ -1,9 +1,12 @@
 #include "Person.h"
 
-Person::Person(const std::string& name, int age, unsigned int dni, const std::string& address, const std::string& email, const std::string& phone)
+
+using namespace std;
+
+Person::Person(const string& name, int age, unsigned int dni, const string& address, const string& email, const std::string& phone)
     : name(name), age(age), dni(dni), address(address), email(email), phone(phone){}
 
-std::string Person::getName() const {
+string Person::getName() const {
     return name;
 }
 
@@ -11,19 +14,19 @@ int Person::getAge() const {
     return age;
 }
 
-unsigned int Person::getDni() const {
-	return dni;
+unsigned int Person::getDni() const{
+    return dni;
 }
 
-std::string Person::getAddress() const {
+string Person::getAddress() const {
     return address;
 }
 
-std::string Person::getEmail() const {
+string Person::getEmail() const {
     return email;
 }
 
-std::string Person::getPhone() const {
+string Person::getPhone() const {
     return phone;
 }
 

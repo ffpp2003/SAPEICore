@@ -308,8 +308,7 @@ Client DataBase::getClientById(int id) {
             string email(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 5)));
             string phone(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 6)));
             double balance = sqlite3_column_double(stmt, 11);
-
-            client = Client(clientId, name, age, dni, address, email, phone);
+                client = Client(clientId, name, age, dni, address, email, phone);
             client.setBalance(balance);
             clientInitialized = true;
         }
