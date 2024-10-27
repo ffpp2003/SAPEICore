@@ -51,7 +51,6 @@ void Client::setBalance(double balance){
 }
 
 std::ostream& operator<<(std::ostream& os, const Client& client) {
-    std::string vehiculos;
     os << static_cast<const Person&>(client)
     << "ID: " << client.id << std::endl
     << "Saldo: " << client.balance << std::endl;
