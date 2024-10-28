@@ -43,7 +43,6 @@ void DataBase::createClientTable(){
         "balance REAL NOT NULL,"
         "name TEXT NOT NULL,"
         "age INTEGER NOT NULL,"
-	"dni INTEGER NOT NULL,"
         "address TEXT,"
         "email TEXT,"
         "phone TEXT"
@@ -175,12 +174,11 @@ void DataBase::showVehiclesByClientId(int client_id) {
  * @throws runtime_error Si hay un error al insertar el cliente.
  */
 void DataBase::addClient(const Client& cl) {
-    string sqlInsert = "INSERT OR IGNORE INTO client (id, balance, name, age, dni, address, email, phone) VALUES ("
+    string sqlInsert = "INSERT OR IGNORE INTO client (id, balance, name, age, address, email, phone) VALUES ("
         + to_string(cl.getId()) + ", "
         + to_string(cl.getBalance()) + ", '"
         + cl.getName() + "', "
-        + to_string(cl.getAge()) + ", "
-	+ to_string(cl.getDni()) + ", '"
+        + to_string(cl.getAge()) + ", '"
         + cl.getAddress() + "', '"
         + cl.getEmail() + "', '"
         + cl.getPhone() + "');";
@@ -282,7 +280,7 @@ int DataBase::callback(void* data, int argc, char** argv, char** azColName) {
 Client DataBase::getClientById(int id) {
     sqlite3_stmt* stmt;
     const char* sqlQuery =
-        "SELECT client.id, client.name, client.age, client.dni, client.address, client.email, client.phone, "
+        "SELECT client.id, client.name, client.age, client.address, client.email, client.phone, "
         "vehicle.license, vehicle.type, vehicle.color, vehicle.brand, vehicle.model, "
         "client.balance "
         "FROM client "
@@ -303,12 +301,12 @@ Client DataBase::getClientById(int id) {
             int clientId = sqlite3_column_int(stmt, 0);
             string name(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 1)));
             int age = sqlite3_column_int(stmt, 2);
-	    unsigned int dni = sqlite3_column_int(stmt, 3);
-            string address(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 4))); 
-            string email(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 5)));
-            string phone(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 6)));
+            string address(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 3)));
+            string email(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 4)));
+            string phone(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 5)));
             double balance = sqlite3_column_double(stmt, 11);
-                client = Client(clientId, name, age, dni, address, email, phone);
+
+            client = Client(clientId, name, age, address, email, phone);
             client.setBalance(balance);
             clientInitialized = true;
         }
@@ -341,7 +339,7 @@ Client DataBase::getClientById(int id) {
 Client DataBase::getClientByName(string name) {
     sqlite3_stmt* stmt;
     const char* sqlQuery =
-        "SELECT client.id, client.name, client.age, client.dni, client.address, client.email, client.phone, "
+        "SELECT client.id, client.name, client.age, client.address, client.email, client.phone, "
         "vehicle.license, vehicle.type, vehicle.color, vehicle.brand, vehicle.model, "
         "client.balance "
         "FROM client "
@@ -362,13 +360,12 @@ Client DataBase::getClientByName(string name) {
             int clientId = sqlite3_column_int(stmt, 0);
             std::string clientName(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 1)));
             int age = sqlite3_column_int(stmt, 2);
-	    unsigned int dni = sqlite3_column_int(stmt, 3);
-            std::string address(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 4)));
-            std::string email(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 5)));
-            std::string phone(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 6)));
+            std::string address(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 3)));
+            std::string email(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 4)));
+            std::string phone(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 5)));
             double balance = sqlite3_column_double(stmt, 11);
 
-            client = Client(clientId, clientName, age, dni, address, email, phone);
+            client = Client(clientId, clientName, age, address, email, phone);
             client.setBalance(balance);
             clientInitialized = true;
         }

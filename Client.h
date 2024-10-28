@@ -18,7 +18,7 @@ private:
     double balance; /**<Lleva el saldo del cliente, en pesos argentinos*/
 
 public:
-    Client( unsigned long long id = 0, const std::string& name ="", int age = 0, unsigned int dni = 0, const std::string& address ="", const std::string& email = "",
+    Client( unsigned long long id = 0, const std::string& name ="", int age = 0, const std::string& address ="", const std::string& email = "",
             const std::string& phone = "", const std::string& license = "", const std::string& type = "",
             const std::string& color = "", const std::string& brand = "", const std::string& model = "");
 
