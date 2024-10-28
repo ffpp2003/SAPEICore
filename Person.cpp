@@ -3,14 +3,14 @@
 
 using namespace std;
 
-Person::Person(const string& name, int age, unsigned int dni, const string& address, const string& email, const std::string& phone)
+Person::Person(const string& name, unsigned int age, unsigned int dni, const string& address, const string& email, const std::string& phone)
     : name(name), age(age), dni(dni), address(address), email(email), phone(phone){}
 
 string Person::getName() const {
     return name;
 }
 
-int Person::getAge() const {
+unsigned int Person::getAge() const {
     return age;
 }
 

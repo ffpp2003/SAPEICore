@@ -43,7 +43,7 @@ void DataBase::createClientTable(){
         "balance REAL NOT NULL,"
         "name TEXT NOT NULL,"
         "age INTEGER NOT NULL,"
-	"dni INTEGER NOT NULL,"
+        "dni INTEGER NOT NULL,"
         "address TEXT,"
         "email TEXT,"
         "phone TEXT"
@@ -89,7 +89,7 @@ void DataBase::createVehicleTable(){
  * @param vh Objeto de tipo Vehicle que contiene la información del vehículo a agregar.
  * @throws runtime_error Si hay un error al insertar el vehículo.
  */
-void DataBase::addVehicle(int client_id, const Vehicle& vh) {
+void DataBase::addVehicle(const unsigned long long client_id, const Vehicle& vh) {
     string sqlInsert = "INSERT OR IGNORE INTO vehicle (license, client_id, type, color, brand, model) VALUES ('"
       + vh.getLicensePlate() + "', "
       + to_string(client_id) + ", '"
@@ -104,10 +104,10 @@ void DataBase::addVehicle(int client_id, const Vehicle& vh) {
     }
 }
 
-void DataBase::addMultipleVehicles(int client_id, const std::vector<Vehicle>& vh){
-  for(int i = 0; i < vh.size(); i++){
-    addVehicle(client_id, vh.at(i));
-  }
+void DataBase::addMultipleVehicles(const unsigned long long client_id, const vector<Vehicle>& vh){
+    for(int i = 0; i < vh.size(); i++){
+        addVehicle(client_id, vh.at(i));
+    }
 }
 
 /**
@@ -157,7 +157,7 @@ void DataBase::showVehicleByLicense(const string& license) {
  * @param client_id ID del cliente cuyos vehículos se desean mostrar.
  * @throws runtime_error Si hay un error al ejecutar la consulta.
  */
-void DataBase::showVehiclesByClientId(int client_id) {
+void DataBase::showVehiclesByClientId(const unsigned long long client_id) {
     string sql = "SELECT * FROM vehicle WHERE client_id = " + to_string(client_id) + ";";
 
     if (sqlite3_exec(db, sql.c_str(), callback, nullptr, &errMsg) != SQLITE_OK) {
@@ -180,7 +180,7 @@ void DataBase::addClient(const Client& cl) {
         + to_string(cl.getBalance()) + ", '"
         + cl.getName() + "', "
         + to_string(cl.getAge()) + ", "
-	+ to_string(cl.getDni()) + ", '"
+        + to_string(cl.getDni()) + ", '"
         + cl.getAddress() + "', '"
         + cl.getEmail() + "', '"
         + cl.getPhone() + "');";
@@ -200,7 +200,7 @@ void DataBase::addClient(const Client& cl) {
  * @param id ID del cliente a eliminar.
  * @throws runtime_error Si hay un error al eliminar el cliente.
  */
-void DataBase::rmClient(int id) {
+void DataBase::rmClient(const unsigned long long id) {
     string sqlRmClient = "DELETE FROM client WHERE id = " + to_string(id) + ";";
     if (sqlite3_exec(db, sqlRmClient.c_str(), 0, 0, &errMsg) != SQLITE_OK) {
         throw runtime_error(errMsg);
@@ -228,7 +228,7 @@ void DataBase::showClients() {
  * @param id ID del cliente a buscar.
  * @throws runtime_error Si hay un error al ejecutar la consulta.
  */
-void DataBase::showClientById(const int id) {
+void DataBase::showClientById(const unsigned long long id) {
     string sql = "SELECT * FROM client WHERE id = " + to_string(id) + ";";
 
     if (sqlite3_exec(db, sql.c_str(), callback, nullptr, &errMsg) != SQLITE_OK) {
@@ -279,7 +279,7 @@ int DataBase::callback(void* data, int argc, char** argv, char** azColName) {
  * @return Objeto Client con la información del cliente.
  * @throws runtime_error Si hay un error al ejecutar la consulta.
  */
-Client DataBase::getClientById(int id) {
+Client DataBase::getClientById(const unsigned long long id) {
     sqlite3_stmt* stmt;
     const char* sqlQuery =
         "SELECT client.id, client.name, client.age, client.dni, client.address, client.email, client.phone, "
@@ -293,34 +293,34 @@ Client DataBase::getClientById(int id) {
         throw runtime_error(sqlite3_errmsg(db));
     }
 
-    sqlite3_bind_int(stmt, 1, id);
+    sqlite3_bind_int64(stmt, 1, id);
     Client client;
     bool clientInitialized = false;
 
     while (sqlite3_step(stmt) == SQLITE_ROW) {
         // Retrieve client data only once
         if (!clientInitialized) {
-            int clientId = sqlite3_column_int(stmt, 0);
+            unsigned long long clientId = sqlite3_column_int64(stmt, 0);
             string name(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 1)));
-            int age = sqlite3_column_int(stmt, 2);
-	          unsigned int dni = sqlite3_column_int(stmt, 3);
+            unsigned int age = sqlite3_column_int(stmt, 2);
+            unsigned int dni = sqlite3_column_int(stmt, 3);
             string address(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 4))); 
             string email(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 5)));
             string phone(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 6)));
-            double balance = sqlite3_column_double(stmt, 11);
+            double balance = sqlite3_column_double(stmt, 12);
             client = Client(clientId, name, age, dni, address, email, phone);
             client.setBalance(balance);
             clientInitialized = true;
         }
 
         // Retrieve vehicle data (can be multiple)
-        const unsigned char* licenseText = sqlite3_column_text(stmt, 6);
+        const unsigned char* licenseText = sqlite3_column_text(stmt, 7);
         if (licenseText != nullptr) { // Check if there's vehicle data
             string license(reinterpret_cast<const char*>(licenseText));
-            string type(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 7)));
-            string color(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 8)));
-            string brand(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 9)));
-            string model(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 10)));
+            string type(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 8)));
+            string color(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 9)));
+            string brand(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 10)));
+            string model(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 11)));
 
             Vehicle vehicle(license, type, color, brand, model);
             client.addVehicle(vehicle);
@@ -349,7 +349,7 @@ Client DataBase::getClientByName(string name) {
         "WHERE client.name = ?;";
 
     if (sqlite3_prepare_v2(db, sqlQuery, -1, &stmt, nullptr) != SQLITE_OK) {
-        throw std::runtime_error(sqlite3_errmsg(db));
+        throw runtime_error(sqlite3_errmsg(db));
     }
 
     sqlite3_bind_text(stmt, 1, name.c_str(), -1, SQLITE_STATIC);
@@ -359,13 +359,13 @@ Client DataBase::getClientByName(string name) {
     while (sqlite3_step(stmt) == SQLITE_ROW) {
         // Initialize client details only once
         if (!clientInitialized) {
-            int clientId = sqlite3_column_int(stmt, 0);
-            std::string clientName(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 1)));
-            int age = sqlite3_column_int(stmt, 2);
+            unsigned long long clientId = sqlite3_column_int64(stmt, 0);
+            string clientName(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 1)));
+            unsigned int age = sqlite3_column_int(stmt, 2);
 	          unsigned int dni = sqlite3_column_int(stmt, 3);
-            std::string address(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 4)));
-            std::string email(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 5)));
-            std::string phone(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 6)));
+            string address(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 4)));
+            string email(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 5)));
+            string phone(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 6)));
             double balance = sqlite3_column_double(stmt, 11);
 
             client = Client(clientId, clientName, age, dni, address, email, phone);
@@ -376,14 +376,14 @@ Client DataBase::getClientByName(string name) {
         // Retrieve vehicle data (can be multiple vehicles)
         const unsigned char* licenseText = sqlite3_column_text(stmt, 6);
         if (licenseText != nullptr) { // Check if there's vehicle data
-            std::string license(reinterpret_cast<const char*>(licenseText));
-            std::string type(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 7)));
-            std::string color(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 8)));
-            std::string brand(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 9)));
-            std::string model(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 10)));
+            string license(reinterpret_cast<const char*>(licenseText));
+            string type(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 7)));
+            string color(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 8)));
+            string brand(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 9)));
+            string model(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 10)));
 
             Vehicle vehicle(license, type, color, brand, model);
-            client.addVehicle(vehicle);  // Assuming Client has an addVehicle() method
+            client.addVehicle(vehicle);
         }
     }
 
@@ -392,7 +392,7 @@ Client DataBase::getClientByName(string name) {
     return client;
 }
 
-void DataBase::updateBalance(int id, double balance){
+void DataBase::updateBalance(const unsigned long long id, double balance){
     sqlite3_stmt* stmt;
     const char* sqlQuery = "UPDATE client SET balance = ? WHERE id = ?";
 
@@ -401,13 +401,13 @@ void DataBase::updateBalance(int id, double balance){
     }
 
     sqlite3_bind_double(stmt, 1, balance);
-    sqlite3_bind_int(stmt, 2, id);
+    sqlite3_bind_int64(stmt, 2, id);
 
     sqlite3_step(stmt);
     sqlite3_finalize(stmt);
 }
 
-double DataBase::getBalance(int id){
+double DataBase::getBalance(const unsigned long long id){
     sqlite3_stmt* stmt;
     double balance;
     const char* sqlQuery = "SELECT client.balance FROM client WHERE id = ?";
@@ -416,7 +416,7 @@ double DataBase::getBalance(int id){
         throw runtime_error(sqlite3_errmsg(db));
     }
 
-    sqlite3_bind_int(stmt, 1, id);
+    sqlite3_bind_int64(stmt, 1, id);
 
     if (sqlite3_step(stmt) == SQLITE_ROW)
         balance = sqlite3_column_double(stmt, 0);
@@ -436,17 +436,17 @@ double DataBase::getBalance(int id){
  * @param outputFile El nombre del archivo CSV al que se exportarán los datos.
  * @throws runtime_error Si ocurre un error en la consulta o al escribir el archivo.
  */
-void DataBase::exportTableToCSV(const std::string& tableName, const std::string& outputFile) {
-    std::ofstream file(outputFile);
+void DataBase::exportTableToCSV(const string& tableName, const string& outputFile) {
+    ofstream file(outputFile);
     if (!file.is_open()) {
-        throw std::runtime_error("Error al abrir el archivo para escribir.");
+        throw runtime_error("Error al abrir el archivo para escribir.");
     }
 
-    std::string sqlQuery = "SELECT * FROM " + tableName + ";";
+    string sqlQuery = "SELECT * FROM " + tableName + ";";
     sqlite3_stmt* stmt;
 
     if (sqlite3_prepare_v2(db, sqlQuery.c_str(), -1, &stmt, nullptr) != SQLITE_OK) {
-        throw std::runtime_error(sqlite3_errmsg(db));
+        throw runtime_error(sqlite3_errmsg(db));
     }
 
     // Escribir los nombres de las columnas en la primera línea del CSV
@@ -474,13 +474,13 @@ void DataBase::exportTableToCSV(const std::string& tableName, const std::string&
 /**
  * @brief Exporta la tabla de clientes a un archivo CSV.
  */
-void DataBase::exportClientsToCSV(const std::string&){
+void DataBase::exportClientsToCSV(const string&){
     exportTableToCSV("client", "clients.csv");
 }
 
 /**
  * @brief Exporta la tabla de vehículos a un archivo CSV.
  */
-void DataBase::exportVehiclesToCSV(const std::string&){
+void DataBase::exportVehiclesToCSV(const string&){
     exportTableToCSV("vehicle", "vehicles.csv");
 }
