@@ -303,12 +303,12 @@ Client DataBase::getClientById(int id) {
             int clientId = sqlite3_column_int(stmt, 0);
             string name(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 1)));
             int age = sqlite3_column_int(stmt, 2);
-	    unsigned int dni = sqlite3_column_int(stmt, 3);
+	          unsigned int dni = sqlite3_column_int(stmt, 3);
             string address(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 4))); 
             string email(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 5)));
             string phone(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 6)));
             double balance = sqlite3_column_double(stmt, 11);
-                client = Client(clientId, name, age, dni, address, email, phone);
+            client = Client(clientId, name, age, dni, address, email, phone);
             client.setBalance(balance);
             clientInitialized = true;
         }
@@ -362,7 +362,7 @@ Client DataBase::getClientByName(string name) {
             int clientId = sqlite3_column_int(stmt, 0);
             std::string clientName(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 1)));
             int age = sqlite3_column_int(stmt, 2);
-	    unsigned int dni = sqlite3_column_int(stmt, 3);
+	          unsigned int dni = sqlite3_column_int(stmt, 3);
             std::string address(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 4)));
             std::string email(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 5)));
             std::string phone(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 6)));
