@@ -18,4 +18,4 @@ jobs:
 
       - name: Compile project
         run: |
-          g++ -c *.cpp -lsqlite3
+          g++ -c *.cpp -lsqlite3 -Wconversion -Werror
