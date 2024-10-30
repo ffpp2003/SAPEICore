@@ -40,6 +40,10 @@ public:
     double getBalance(const unsigned long long id);
     Client getClientById(const unsigned long long id);
     Client getClientByName(std::string name);
+    std::vector<Client> getClients();
+    std::vector<Vehicle> getVehicleById(unsigned long long vehicleId); 
+    std::vector<Vehicle> getVehicleByName(const std::string& vehicleName); 
+    std::vector<Vehicle> getVehicles();
 
     void rmVehicle(const std::string& license);
     void showVehicles();

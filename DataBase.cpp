@@ -484,3 +484,109 @@ void DataBase::exportClientsToCSV(const string&){
 void DataBase::exportVehiclesToCSV(const string&){
     exportTableToCSV("vehicle", "vehicles.csv");
 }
+
+vector<Client> DataBase::getClients() {
+    std::vector<Client> clients;
+    sqlite3_stmt* stmt;
+    const char* sqlQuery = "SELECT id, name, age, dni, address, email, phone, balance FROM client;";
+
+    if (sqlite3_prepare_v2(db, sqlQuery, -1, &stmt, nullptr) != SQLITE_OK) {
+        throw std::runtime_error(sqlite3_errmsg(db));
+    }
+
+    while (sqlite3_step(stmt) == SQLITE_ROW) {
+        unsigned long long id = sqlite3_column_int64(stmt, 0);
+        std::string name(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 1)));
+        int age = sqlite3_column_int(stmt, 2);
+        unsigned int dni = sqlite3_column_int(stmt, 3);
+        std::string address(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 4)));
+        std::string email(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 5)));
+        std::string phone(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 6)));
+        double balance = sqlite3_column_double(stmt, 7);
+
+        Client client(id, name, age, dni, address, email, phone);
+        client.setBalance(balance);
+        clients.push_back(client);
+    }
+
+    sqlite3_finalize(stmt);
+    return clients;
+}
+
+vector<Vehicle> DataBase::getVehicleById(unsigned long long clientId) {
+    sqlite3_stmt* stmt;
+    const char* sqlQuery =
+        "SELECT license, type, color, brand, model "
+        "FROM vehicle "
+        "WHERE client_id = ?;";
+
+    std::vector<Vehicle> vehicles;
+
+    // Preparar la consulta
+    if (sqlite3_prepare_v2(db, sqlQuery, -1, &stmt, nullptr) != SQLITE_OK) {
+        throw std::runtime_error(sqlite3_errmsg(db));
+    }
+
+    // Bind del parámetro clientId
+    sqlite3_bind_int64(stmt, 1, clientId);
+
+    // Ejecutar la consulta y construir los vehículos
+    while (sqlite3_step(stmt) == SQLITE_ROW) {
+        std::string license(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 0)));
+        std::string type(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 1)));
+        std::string color(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 2)));
+        std::string brand(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 3)));
+        std::string model(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 4)));
+
+        Vehicle vehicle(license, type, color, brand, model);
+        vehicles.push_back(vehicle);
+    }
+
+    // Liberar la consulta preparada
+    sqlite3_finalize(stmt);
+
+    return vehicles;
+}
+
+vector<Vehicle> DataBase::getVehicleByName(const std::string& clientName) {
+    Client client = getClientByName(clientName);
+    unsigned long long clientId = client.getId();
+    if (clientId == 0) {
+        return {};
+    }
+
+    // Ahora buscar los vehículos asociados a ese client_id
+    std::vector<Vehicle> vehicles = getVehicleById(clientId);
+
+    return vehicles; // No es necesario liberar recursos aquí, ya que `getVehicleById` maneja eso
+}
+
+vector<Vehicle> DataBase::getVehicles() {
+    sqlite3_stmt* stmt;
+    const char* sqlQuery = "SELECT id, license, type, color, brand, model FROM vehicle;";
+
+    std::vector<Vehicle> vehicles;
+
+    // Preparar la consulta
+    if (sqlite3_prepare_v2(db, sqlQuery, -1, &stmt, nullptr) != SQLITE_OK) {
+        throw std::runtime_error(sqlite3_errmsg(db));
+    }
+
+    // Ejecutar la consulta y construir los vehículos
+    while (sqlite3_step(stmt) == SQLITE_ROW) {
+        unsigned long long id = sqlite3_column_int64(stmt, 0);
+        std::string license(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 1)));
+        std::string type(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 2)));
+        std::string color(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 3)));
+        std::string brand(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 4)));
+        std::string model(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 5)));
+
+        Vehicle vehicle(license, type, color, brand, model);
+        vehicles.push_back(vehicle);
+    }
+
+    // Liberar la consulta preparada
+    sqlite3_finalize(stmt);
+
+    return vehicles;
+}
