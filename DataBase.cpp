@@ -549,27 +549,8 @@ vector<Vehicle> DataBase::getVehicleById(unsigned long long clientId) {
 }
 
 vector<Vehicle> DataBase::getVehicleByName(const std::string& clientName) {
-    sqlite3_stmt* stmt;
-    const char* sqlQueryClientId =
-        "SELECT id FROM client WHERE name = ?;";
-
-    // Primero, buscar el client_id del cliente por su nombre
-    if (sqlite3_prepare_v2(db, sqlQueryClientId, -1, &stmt, nullptr) != SQLITE_OK) {
-        throw std::runtime_error(sqlite3_errmsg(db));
-    }
-
-    // Bind del parámetro clientName
-    sqlite3_bind_text(stmt, 1, clientName.c_str(), -1, SQLITE_STATIC);
-
-    unsigned long long clientId = 0;
-    if (sqlite3_step(stmt) == SQLITE_ROW) {
-        clientId = sqlite3_column_int64(stmt, 0);
-    }
-
-    // Liberar la consulta preparada
-    sqlite3_finalize(stmt);
-
-    // Si no se encontró el client_id, retornar un vector vacío
+    Client client = getClientByName(clientName);
+    unsigned long long clientId = client.getId();
     if (clientId == 0) {
         return {};
     }
