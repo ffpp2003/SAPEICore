@@ -437,52 +437,25 @@ vector<Client> DataBase::getAllClients() {
     return clients;
 }
 
-vector<Vehicle> DataBase::getVehiclesById(unsigned long long clientId) {
-    sqlite3_stmt* stmt;
-    const char* sqlQuery =
-        "SELECT license, type, color, brand, model "
-        "FROM vehicle "
-        "WHERE client_id = ?;";
-
-    std::vector<Vehicle> vehicles;
-
-    if (sqlite3_prepare_v2(db, sqlQuery, -1, &stmt, nullptr) != SQLITE_OK) {
-        throw std::runtime_error(sqlite3_errmsg(db));
-    }
-
-    sqlite3_bind_int64(stmt, 1, clientId);
-
-    while (sqlite3_step(stmt) == SQLITE_ROW) {
-        std::string license(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 0)));
-        std::string type(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 1)));
-        std::string color(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 2)));
-        std::string brand(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 3)));
-        std::string model(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 4)));
-
-        Vehicle vehicle(license, type, color, brand, model);
-        vehicles.push_back(vehicle);
-    }
-
-    sqlite3_finalize(stmt);
-
-    return vehicles;
+/**
+ * @brief Obtiene todos los vehiculos de un cliente por su id
+ */
+vector<Vehicle> DataBase::getVehiclesByClientId(unsigned long long clientId) {
+    Client client = getClientById(clientId);
+    return client.getVehicles();
 }
 
-vector<Vehicle> DataBase::getVehiclesByName(const std::string& clientName) {
+/**
+ * @brief Obtiene todos los vehiculos de un cliente por su nombre
+ */
+vector<Vehicle> DataBase::getVehiclesByClientName(const std::string& clientName) {
     Client client = getClientByName(clientName);
-    unsigned long long clientId = client.getId();
-    if (clientId == 0) {
-        return {};
-    }
-
-    std::vector<Vehicle> vehicles = getVehiclesById(clientId);
-
-    return vehicles;
+    return client.getVehicles();
 }
 
-vector<Vehicle> DataBase::getVehicles() {
+vector<Vehicle> DataBase::getAllVehicles() {
     sqlite3_stmt* stmt;
-    const char* sqlQuery = "SELECT id, license, type, color, brand, model FROM vehicle;";
+    const char* sqlQuery = "SELECT client_id, license, type, color, brand, model FROM vehicle;";
 
     std::vector<Vehicle> vehicles;
 

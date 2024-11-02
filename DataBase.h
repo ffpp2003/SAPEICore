@@ -52,10 +52,11 @@ public:
     Client getClientByName(std::string name);
     Client getClientByDni(unsigned int dni);
 
+    std::vector<Vehicle> getVehiclesByClientId(unsigned long long vehicleId);
+    std::vector<Vehicle> getVehiclesByClientName(const std::string& vehicleName);
+
     std::vector<Client> getAllClients();
-    std::vector<Vehicle> getVehiclesById(unsigned long long vehicleId);
-    std::vector<Vehicle> getVehiclesByName(const std::string& vehicleName);
-    std::vector<Vehicle> getVehicles();
+    std::vector<Vehicle> getAllVehicles();
 
     void rmVehicle(const std::string& license);
     void showVehicles();
