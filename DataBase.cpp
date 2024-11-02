@@ -206,6 +206,11 @@ void DataBase::rmClient(const unsigned long long id) {
         throw runtime_error(errMsg);
         sqlite3_free(errMsg);
     }
+    string sqlRmVehicles = "DELETE FROM vehicle WHERE client_id = " + to_string(id) + ";";
+    if (sqlite3_exec(db, sqlRmVehicles.c_str(), 0, 0, &errMsg) != SQLITE_OK) {
+        throw runtime_error(errMsg);
+        sqlite3_free(errMsg);
+    }
 }
 
 /**
