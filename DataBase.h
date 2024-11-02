@@ -94,6 +94,14 @@ int DataBase::checkExistence(const std::string& table, const std::string& by, T 
     return exists;
 }
 
+/**
+ * @brief Busca a travez de calquier atributo un cliente en la tabla.
+ *
+ * Devuelve un NULLCLIENT si el cliente no es encontrado.
+ *
+ * @param atribute Atributo para la busqueda (dni, id, etc).
+ * @param value Valor del atributo seleccionado para la busqueda.
+ */
 template <typename T>
 Client DataBase::getClient(const std::string& atribute, T value) {
     if(!checkExistence("client", atribute, value)){

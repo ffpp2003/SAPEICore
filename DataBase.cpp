@@ -326,13 +326,23 @@ double DataBase::getBalance(const unsigned long long id){
     return balance;
 }
 
+/**
+ * @brief Busca un cliente por su id.
+ */
 Client DataBase::getClientById(const unsigned long long id){
     return getClient("id",id);
 }
 
+/**
+ * @brief Busca un cliente por su nombre.
+ */
 Client DataBase::getClientByName(std::string name){
     return getClient("name",name);
 }
+
+/**
+ * @brief Busca un cliente por su dni.
+ */
 
 Client DataBase::getClientByDni(unsigned int dni){
     return getClient("dni",dni);
@@ -466,10 +476,9 @@ vector<Vehicle> DataBase::getVehicleByName(const std::string& clientName) {
         return {};
     }
 
-    // Ahora buscar los vehículos asociados a ese client_id
     std::vector<Vehicle> vehicles = getVehicleById(clientId);
 
-    return vehicles; // No es necesario liberar recursos aquí, ya que `getVehicleById` maneja eso
+    return vehicles;
 }
 
 vector<Vehicle> DataBase::getVehicles() {
