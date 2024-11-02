@@ -630,4 +630,3 @@ vector<Vehicle> DataBase::getVehicles() {
 
     return vehicles;
 }
-

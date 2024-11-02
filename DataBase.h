@@ -58,5 +58,4 @@ public:
     void exportVehiclesToCSV(const std::string& = "vehiculos.csv");
 };
 
-
 #endif // DATABASE_H
