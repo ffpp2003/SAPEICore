@@ -437,7 +437,7 @@ vector<Client> DataBase::getAllClients() {
     return clients;
 }
 
-vector<Vehicle> DataBase::getVehicleById(unsigned long long clientId) {
+vector<Vehicle> DataBase::getVehiclesById(unsigned long long clientId) {
     sqlite3_stmt* stmt;
     const char* sqlQuery =
         "SELECT license, type, color, brand, model "
@@ -468,14 +468,14 @@ vector<Vehicle> DataBase::getVehicleById(unsigned long long clientId) {
     return vehicles;
 }
 
-vector<Vehicle> DataBase::getVehicleByName(const std::string& clientName) {
+vector<Vehicle> DataBase::getVehiclesByName(const std::string& clientName) {
     Client client = getClientByName(clientName);
     unsigned long long clientId = client.getId();
     if (clientId == 0) {
         return {};
     }
 
-    std::vector<Vehicle> vehicles = getVehicleById(clientId);
+    std::vector<Vehicle> vehicles = getVehiclesById(clientId);
 
     return vehicles;
 }
