@@ -8,6 +8,7 @@
 #include <fstream>
 #include "Client.h"
 #include "Vehicle.h"
+#include "Error.h"
 
 /**
  * @brief Clase para administrar la base de datos
@@ -34,6 +35,7 @@ public:
     ~DataBase();
 
     void addClient(const Client&);
+    int updateClient(const Client&);
     void rmClient(const unsigned long long id);
     void showClientById(const unsigned long long);
     void showClientByName(const std::string&);

@@ -193,6 +193,13 @@ void DataBase::addClient(const Client& cl) {
     addMultipleVehicles(cl.getId(), cl.getVehicles());
 }
 
+int DataBase::updateClient(const Client& cl) {
+    if(!checkExistence("client","id",cl.getId())) return DB_CLIENT_NOT_FOUND;
+
+    rmClient(cl.getId());
+    addClient(cl);
+    return 0;
+}
 
 /**
  * @brief Elimina un cliente de la base de datos por su ID.
