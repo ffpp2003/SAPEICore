@@ -284,34 +284,6 @@ int DataBase::callback(void* data, int argc, char** argv, char** azColName) {
     return 0;
 }
 
-template <typename T>
-int DataBase::checkExistence(const std::string& table, const std::string& by, T value) {
-    sqlite3_stmt* stmt;
-    int exists = 0;
-    std::string sqlSmtp = "SELECT 1 FROM " + table + " WHERE " + by + " = ";
-
-    if constexpr (std::is_same<T, std::string>::value){
-        sqlSmtp = sqlSmtp +  "'" + value + "'";
-    } else if constexpr (std::is_pointer<T>::value){
-        sqlSmtp = sqlSmtp +  "'" + std::string(value) + "'";
-    } else if constexpr (std::is_floating_point<T>::value || std::is_integral<T>::value){
-        sqlSmtp = sqlSmtp +  std::to_string(value);
-    } else {
-        std::cerr << "Tipo de dato no soportado." << std::endl;
-        return -1;
-    }
-
-    if (sqlite3_prepare_v2(db, sqlSmtp.c_str(), -1, &stmt, nullptr) != SQLITE_OK) {
-        std::cerr << sqlite3_errmsg(db) << std::endl;
-        return -1;
-    }
-
-    if (sqlite3_step(stmt) == SQLITE_ROW) exists = 1;
-
-    sqlite3_finalize(stmt);
-    return exists;
-}
-
 /**
  * @brief Obtiene un cliente de la base de datos por su ID.
  *
