@@ -4,6 +4,8 @@
 #include <iostream>
 #include <string>
 
+#define NULLVEHICLE Vehicle()
+
 class Vehicle {
 
 friend std::ostream& operator<<(std::ostream& os, const Vehicle& vehicle);
@@ -29,6 +31,7 @@ public:
     void setColor(const std::string& color);
     void setBrand(const std::string& brand);
     void setModel(const std::string& model);
+    inline bool isNull() const { return licensePlate.empty(); }
 
 };
 

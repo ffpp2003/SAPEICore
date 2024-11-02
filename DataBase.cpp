@@ -441,6 +441,11 @@ vector<Client> DataBase::getAllClients() {
  * @brief obtiene un vehiculo por su patente
  */
 Vehicle DataBase::getVehicleByPlate(const std::string& plate){
+    if(!checkExistence("vehicle","license",plate)){
+        cerr << getErrMsg(DB_VEHICLE_NOT_FOUND) << endl;
+        return NULLVEHICLE;
+    }
+
     sqlite3_stmt* stmt;
     string sqlQuery = "SELECT client_id, license, type, color, brand, model "
         "FROM vehicle WHERE license = '"+ plate +"' ;";
