@@ -439,6 +439,9 @@ vector<Client> DataBase::getAllClients() {
 
 /**
  * @brief obtiene un vehiculo por su patente
+ *
+ * Devuelve NULLVEHICLE si no existe un vehiculo con esa patente
+ *
  */
 Vehicle DataBase::getVehicleByPlate(const std::string& plate){
     if(!checkExistence("vehicle","license",plate)){
