@@ -193,6 +193,13 @@ void DataBase::addClient(const Client& cl) {
     addMultipleVehicles(cl.getId(), cl.getVehicles());
 }
 
+int DataBase::updateClient(const Client& cl) {
+    if(!checkExistence("client","id",cl.getId())) return DB_CLIENT_NOT_FOUND;
+
+    rmClient(cl.getId());
+    addClient(cl);
+    return 0;
+}
 
 /**
  * @brief Elimina un cliente de la base de datos por su ID.
@@ -203,6 +210,11 @@ void DataBase::addClient(const Client& cl) {
 void DataBase::rmClient(const unsigned long long id) {
     string sqlRmClient = "DELETE FROM client WHERE id = " + to_string(id) + ";";
     if (sqlite3_exec(db, sqlRmClient.c_str(), 0, 0, &errMsg) != SQLITE_OK) {
+        throw runtime_error(errMsg);
+        sqlite3_free(errMsg);
+    }
+    string sqlRmVehicles = "DELETE FROM vehicle WHERE client_id = " + to_string(id) + ";";
+    if (sqlite3_exec(db, sqlRmVehicles.c_str(), 0, 0, &errMsg) != SQLITE_OK) {
         throw runtime_error(errMsg);
         sqlite3_free(errMsg);
     }
