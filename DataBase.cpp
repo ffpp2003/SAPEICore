@@ -463,7 +463,6 @@ vector<Vehicle> DataBase::getVehicleById(unsigned long long clientId) {
         vehicles.push_back(vehicle);
     }
 
-    // Liberar la consulta preparada
     sqlite3_finalize(stmt);
 
     return vehicles;
