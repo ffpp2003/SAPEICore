@@ -28,7 +28,7 @@ const std::string errLib[][99] = {
     }
 };
 
-std::string getErrMsg(int error){
+inline std::string getErrMsg(int error){
     int errType = error / 100;
     int errId = error % 100;
     return errLib[errType][errId];
