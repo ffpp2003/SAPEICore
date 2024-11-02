@@ -5,6 +5,8 @@
 #include "Vehicle.h"
 #include <vector>
 
+#define NULLCLIENT Client()
+
 /**
  * @brief Clase para administrar los datos de un cliente
  */
@@ -32,6 +34,7 @@ public:
     void removeVehicleByPos(int vehiclePos);
     void removeVehicleByLicense(std::string license);
     void setBalance(double balance);
+    inline bool isNull() {return id ? false : true;}
 };
 
 #endif
