@@ -66,7 +66,7 @@ int DataBase::checkExistence(const std::string& table, const std::string& by, T 
 
     if constexpr (std::is_same<T, std::string>::value){
         sqlSmtp = sqlSmtp +  "'" + value + "'";
-    } else if constexpr (std::is_pointer<T>::value){
+    } else if constexpr (std::is_same<T, const char*>::value || std::is_same<T, char*>::value){
         sqlSmtp = sqlSmtp +  "'" + std::string(value) + "'";
     } else if constexpr (std::is_floating_point<T>::value || std::is_integral<T>::value){
         sqlSmtp = sqlSmtp +  std::to_string(value);
