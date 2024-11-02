@@ -438,6 +438,36 @@ vector<Client> DataBase::getAllClients() {
 }
 
 /**
+ * @brief obtiene un vehiculo por su patente
+ */
+Vehicle DataBase::getVehicleByPlate(const std::string& plate){
+    sqlite3_stmt* stmt;
+    string sqlQuery = "SELECT client_id, license, type, color, brand, model "
+        "FROM vehicle WHERE license = '"+ plate +"' ;";
+
+    Vehicle vehicle;
+
+    if (sqlite3_prepare_v2(db, sqlQuery.c_str(), -1, &stmt, nullptr) != SQLITE_OK) {
+        throw std::runtime_error(sqlite3_errmsg(db));
+    }
+
+    while (sqlite3_step(stmt) == SQLITE_ROW) {
+        unsigned long long id = sqlite3_column_int64(stmt, 0);
+        std::string license(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 1)));
+        std::string type(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 2)));
+        std::string color(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 3)));
+        std::string brand(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 4)));
+        std::string model(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 5)));
+
+        vehicle = Vehicle(license, type, color, brand, model);
+    }
+
+    sqlite3_finalize(stmt);
+
+    return vehicle;
+}
+
+/**
  * @brief Obtiene todos los vehiculos de un cliente por su id
  */
 vector<Vehicle> DataBase::getVehiclesByClientId(unsigned long long clientId) {

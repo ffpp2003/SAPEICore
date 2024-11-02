@@ -52,6 +52,7 @@ public:
     Client getClientByName(std::string name);
     Client getClientByDni(unsigned int dni);
 
+    Vehicle getVehicleByPlate(const std::string& plate);
     std::vector<Vehicle> getVehiclesByClientId(unsigned long long vehicleId);
     std::vector<Vehicle> getVehiclesByClientName(const std::string& vehicleName);
 
