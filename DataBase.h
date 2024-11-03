@@ -22,7 +22,6 @@ private:
     sqlite3* db; /**<Puntero para interactuar con la base de datos*/
     char* errMsg = 0; /**<Cadena para guardar los mensajes de error*/
     void createClientTable();
-    void addVehicle(const unsigned long long client_id, const Vehicle&);
     void addMultipleVehicles(const unsigned long long client_id, const std::vector<Vehicle>&);
     void createVehicleTable();
     void exportTableToCSV(const std::string& tableName, const std::string& outputFile);
@@ -59,6 +58,7 @@ public:
     std::vector<Client> getAllClients();
     std::vector<Vehicle> getAllVehicles();
 
+    void addVehicle(const unsigned long long client_id, const Vehicle&);
     void rmVehicle(const std::string& license);
     void showVehicles();
     void showVehicleByLicense(const std::string& license);
