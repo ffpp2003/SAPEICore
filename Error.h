@@ -16,7 +16,7 @@ enum errorCode{
 
 const std::string errLib[][99] = {
     {
-        //DATABASE_ERROR [000 - 099]
+        //DATABASE_ERROR [001 - 099]
         "Cliente no encontrado",        //000
         "Vehiculo no encontrado",       //001
         "Cliente existente",            //002
