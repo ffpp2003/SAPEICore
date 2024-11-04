@@ -11,6 +11,8 @@ enum errorCode{
     DB_DUPLICATE_VEHICLE,
     //Client Errors
     CL_SERVER_TIMEOUT = 100,
+    //Vehicle Errors
+    VH_CLIENT_ASSOCIATE = 200,
 };
 
 
@@ -25,6 +27,10 @@ const std::string errLib[][99] = {
     {
         //CLIENT_ERROR  [100 - 199]
         "No se pudo conectar con el servidor"
+    },
+    {
+        //VEHICLE_ERROR  [200 - 299]
+        "Este vehiculo ya tiene un cliente asociado"
     }
 };
 

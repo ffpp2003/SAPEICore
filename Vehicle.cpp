@@ -1,7 +1,9 @@
 #include "Vehicle.h"
 
-Vehicle::Vehicle(const std::string& license, const std::string& type, const std::string& color, const std::string& brand, const std::string& model)
-    : licensePlate(license), type(type), color(color), brand(brand), model(model) {
+using namespace std;
+
+Vehicle::Vehicle(const std::string& license, const std::string& type, const std::string& color, const std::string& brand, const std::string& model, unsigned long long clientId)
+    : licensePlate(license), type(type), color(color), brand(brand), model(model), clientId(clientId){
 }
 
 std::string Vehicle::getLicensePlate() const {
@@ -23,6 +25,10 @@ std::string Vehicle::getModel() const {
   return model;
 }
 
+unsigned long long Vehicle::getClientId() const {
+  return clientId;
+}
+
 void Vehicle::setLicensePlate(const std::string& license) {
   this->licensePlate = license;
 }
@@ -41,6 +47,17 @@ void Vehicle::setBrand(const std::string& brand) {
 
 void Vehicle::setModel(const std::string& model) {
   this->model = model;
+}
+
+void Vehicle::setClientId(unsigned long long clientId) {
+  if (this->clientId == 0)
+    this->clientId = clientId;
+  else
+    cerr << getErrMsg(VH_CLIENT_ASSOCIATE) << endl;
+}
+
+void Vehicle::updateClientId(unsigned long long clientId) {
+    this->clientId = clientId;
 }
 
 std::ostream& operator<<(std::ostream& os, const Vehicle& vehicle) {

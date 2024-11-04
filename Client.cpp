@@ -11,7 +11,7 @@ Client::Client(unsigned long long id, const std::string& name, unsigned int age,
     : Person(name, age, dni, address, email, phone), id(id){
     balance = 0;
     if(license != ""){
-      Vehicle firstVehicle(license, type, color, brand, model);
+      Vehicle firstVehicle(license, type, color, brand, model, id);
       vehicleVector.push_back(firstVehicle);
     }
 }
@@ -30,9 +30,12 @@ std::vector<Vehicle> Client::getVehicles() const{
 
 void Client::setId(unsigned long long id) {
     this->id= id;
+    for(int i = 0; i <= vehicleVector.size(); i++)
+      vehicleVector[i].updateClientId(id);
 }
 
-void Client::addVehicle(const Vehicle& vehicle) {
+void Client::addVehicle(Vehicle vehicle) {
+    vehicle.setClientId(this->id);
     vehicleVector.push_back(vehicle);
 }
 
