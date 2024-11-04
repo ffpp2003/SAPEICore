@@ -161,7 +161,7 @@ Client DataBase::getClient(const std::string& atribute, T value) {
             std::string brand(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 10)));
             std::string model(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 11)));
 
-            Vehicle vehicle(license, type, color, brand, model, client.getId());
+            Vehicle vehicle(license, type, color, brand, model);
             client.addVehicle(vehicle);
         }
     }
