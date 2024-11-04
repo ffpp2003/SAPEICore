@@ -30,7 +30,7 @@ public:
     std::vector<Vehicle> getVehicles() const;
 
     void setId(unsigned long long id);
-    void addVehicle(const Vehicle& vehicle);
+    void addVehicle(Vehicle vehicle);
     void removeVehicleByPos(int vehiclePos);
     void removeVehicleByLicense(std::string license);
     void setBalance(double balance);

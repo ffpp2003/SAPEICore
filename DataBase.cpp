@@ -467,7 +467,7 @@ Vehicle DataBase::getVehicleByPlate(const std::string& plate){
         std::string brand(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 4)));
         std::string model(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 5)));
 
-        vehicle = Vehicle(license, type, color, brand, model);
+        vehicle = Vehicle(license, type, color, brand, model, id);
     }
 
     sqlite3_finalize(stmt);
