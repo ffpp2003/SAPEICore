@@ -5,7 +5,7 @@
 
 enum errorCode{
     //Database errors
-    DB_CLIENT_NOT_FOUND,
+    DB_CLIENT_NOT_FOUND = 1,
     DB_VEHICLE_NOT_FOUND,
     DB_DUPLICATE_CLIENT,
     DB_DUPLICATE_VEHICLE,
