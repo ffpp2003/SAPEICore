@@ -30,6 +30,30 @@ string Person::getPhone() const {
     return phone;
 }
 
+void Person::setName(const std::string& name){
+    this->name = name;
+}
+
+void Person::setAge(const unsigned int age){
+    this->age = age;
+}
+
+void Person::setDni(const unsigned int dni){
+    this->dni = dni;
+}
+
+void Person::setAddress(const std::string& address){
+    this->address = address;
+}
+
+void Person::setEmail(const std::string& email){
+    this->email = email;
+}
+
+void Person::setPhone(const std::string& phone){
+    this->phone = phone;
+}
+
 std::ostream& operator<<(std::ostream& os, const Person& person) {
     os << "Nombre: " << person.name << std::endl;
     os << "Edad: " << person.age << std::endl;

@@ -27,6 +27,12 @@ public:
     std::string getEmail() const;
     std::string getPhone() const;
 
+    void setName(const std::string&);
+    void setAge(const unsigned int);
+    void setDni(const unsigned int);
+    void setAddress(const std::string&);
+    void setEmail(const std::string&);
+    void setPhone(const std::string&);
 };
 
 #endif // PERSON_H
