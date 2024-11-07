@@ -17,9 +17,10 @@ enum errorCode{
 
 // enumRange es el rango en donde hay enums definidos, donde se consideran
 // pares de numeros para el rango, siendo el primero el limite inferior y
-// el segundo el limite superior (NO EXCLUYENTES). "errLib" debe siempre tener
-// cadenas definidas para los rangos de errores (si no hay cadena, debe ser vacia).
-const int enumRange[] = {0, 3, 100, 100, 200, 200, 300, 303};
+// el segundo el limite superior (NO EXCLUYENTES). "errLib" debe contener
+// al menos una cadena vacia para asignar un espacio en el arreglo. En caso
+// de no tener cadenas, el rango de aquellas debera ser excluido de enumRange
+const int enumRange[] = {0, 3, 100, 100, 200, 200};
 
 const std::string errLib[][99] = {
     {
