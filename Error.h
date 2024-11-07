@@ -14,8 +14,7 @@ enum errorCode{
     //Vehicle Errors
     VH_CLIENT_ASSOCIATE = 200,
     //Terminal errors (for)
-    TR_OK = 300,
-    TR_NOT_ENOUGH_FUNDS,
+    TR_NOT_ENOUGH_FUNDS = 300,
     TR_JUST_ENOUGH_FUNDS,
     TR_CLIENT_NOT_FOUND,
 };
@@ -40,7 +39,6 @@ const std::string errLib[][99] = {
     {
         //TERMINAL_ERROR [300 - 399]
         // No tiene sentido que haya cadenas. La terminal no tiene pantalla.
-        "",
         "",
         "",
         "",
