@@ -13,6 +13,11 @@ enum errorCode{
     CL_SERVER_TIMEOUT = 100,
     //Vehicle Errors
     VH_CLIENT_ASSOCIATE = 200,
+    //Terminal errors (for)
+    TR_OK = 300,
+    TR_NOT_ENOUGH_FUNDS,
+    TR_JUST_ENOUGH_FUNDS,
+    TR_CLIENT_NOT_FOUND,
 };
 
 
@@ -31,6 +36,14 @@ const std::string errLib[][99] = {
     {
         //VEHICLE_ERROR  [200 - 299]
         "Este vehiculo ya tiene un cliente asociado"
+    },
+    {
+        //TERMINAL_ERROR [300 - 399]
+        // No tiene sentido que haya cadenas. La terminal no tiene pantalla.
+        "",
+        "",
+        "",
+        "",
     }
 };
 
