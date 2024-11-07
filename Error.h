@@ -5,14 +5,14 @@
 
 enum errorCode{
     //Database errors
-    DB_CLIENT_NOT_FOUND,
+    DB_LI = DB_CLIENT_NOT_FOUND,
     DB_VEHICLE_NOT_FOUND,
     DB_DUPLICATE_CLIENT,
-    DB_DUPLICATE_VEHICLE,
+    DB_LS = DB_DUPLICATE_VEHICLE,
     //Client Errors
-    CL_SERVER_TIMEOUT = 100,
+    CL_LI = CL_LS = CL_SERVER_TIMEOUT = 100,
     //Vehicle Errors
-    VH_CLIENT_ASSOCIATE = 200,
+    VH_LI = VH_LS = VH_CLIENT_ASSOCIATE = 200,
 };
 
 // enumRange es el rango en donde hay enums definidos, donde se consideran
@@ -20,7 +20,7 @@ enum errorCode{
 // el segundo el limite superior (NO EXCLUYENTES). "errLib" debe contener
 // al menos una cadena vacia para asignar un espacio en el arreglo. En caso
 // de no tener cadenas, el rango de aquellas debera ser excluido de enumRange
-const int enumRange[] = {0, 3, 100, 100, 200, 200};
+const int enumRange[] = {DB_LI, DB_LS, CL_LI, CL_LS, VH_LI, VH_LS};
 
 const std::string errLib[][99] = {
     {
@@ -40,15 +40,21 @@ const std::string errLib[][99] = {
     }
 };
 
-inline std::string getErrMsg(int error){
+std::string getErrMsg(int error){
+    if (checkEnumRange(error) == 0)
+        return "NO_ERR_MSG";
+
+    int errType = error / 100;
+    int errId = error % 100;
+    return errLib[errType][errId];
+}
+
+bool checkEnumRange(int error){
     for(int i = 0; i<(sizeof(enumRange)/sizeof(*enumRange)); i += 2) {
-        if(enumRange[i] <= error && enumRange[i+1] >= error){
-            int errType = error / 100;
-            int errId = error % 100;
-            return errLib[errType][errId];
-        }
+        if(enumRange[i] <= error && enumRange[i+1] >= error)
+            return true;
     }
-    return "NO_ERR_MSG";
+    return false;
 }
 
 #endif // ERRORS_H
