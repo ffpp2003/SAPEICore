@@ -6,14 +6,20 @@
 enum errorCode{
     OK,
     //Database errors
-    DB_LI = DB_CLIENT_NOT_FOUND = 1,
+    DB_LI = 1,
+    DB_CLIENT_NOT_FOUND = DB_LI,
     DB_VEHICLE_NOT_FOUND,
     DB_DUPLICATE_CLIENT,
+    DB_DUPLICATE_VEHICLE,
     DB_LS = DB_DUPLICATE_VEHICLE,
     //Client Errors
-    CL_LI = CL_LS = CL_SERVER_TIMEOUT = 100,
+    CL_LI = 100,
+    CL_SERVER_TIMEOUT = CL_LI,
+    CL_LS = CL_SERVER_TIMEOUT,
     //Vehicle Errors
-    VH_LI = VH_LS = VH_CLIENT_ASSOCIATE = 200,
+    VH_LI = 200,
+    VH_CLIENT_ASSOCIATE = VH_LI,
+    VH_LS = VH_CLIENT_ASSOCIATE,
     //Terminal errors (for)
     TR_NOT_ENOUGH_FUNDS = 300,
     TR_JUST_ENOUGH_FUNDS,
@@ -51,6 +57,14 @@ const std::string errLib[][99] = {
     }
 };
 
+bool checkEnumRange(int error){
+    for(int i = 0; i<(sizeof(enumRange)/sizeof(*enumRange)); i += 2) {
+        if(enumRange[i] <= error && enumRange[i+1] >= error)
+            return true;
+    }
+    return false;
+}
+
 std::string getErrMsg(int error){
     if (checkEnumRange(error) == 0)
         return "NO_ERR_MSG";
@@ -58,14 +72,6 @@ std::string getErrMsg(int error){
     int errType = error / 100;
     int errId = error % 100;
     return errLib[errType][errId];
-}
-
-bool checkEnumRange(int error){
-    for(int i = 0; i<(sizeof(enumRange)/sizeof(*enumRange)); i += 2) {
-        if(enumRange[i] <= error && enumRange[i+1] >= error)
-            return true;
-    }
-    return false;
 }
 
 #endif // ERRORS_H
