@@ -176,8 +176,8 @@ void DataBase::showVehiclesByClientId(const unsigned long long client_id) {
  */
 void DataBase::addClient(const Client& cl) {
     string sqlInsert = "INSERT OR IGNORE INTO client (id, balance, name, age, dni, address, email, phone) VALUES ("
-        + to_string(cl.getId()) + ", "
-        + to_string(cl.getBalance()) + ", '"
+        + to_string(cl.getId()) + ", '"
+        + to_string(cl.getBalance()) + "', '"
         + cl.getName() + "', "
         + to_string(cl.getAge()) + ", "
         + to_string(cl.getDni()) + ", '"
