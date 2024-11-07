@@ -4,8 +4,9 @@
 #include <string>
 
 enum errorCode{
+    OK,
     //Database errors
-    DB_LI = DB_CLIENT_NOT_FOUND,
+    DB_LI = DB_CLIENT_NOT_FOUND = 1,
     DB_VEHICLE_NOT_FOUND,
     DB_DUPLICATE_CLIENT,
     DB_LS = DB_DUPLICATE_VEHICLE,
@@ -13,6 +14,10 @@ enum errorCode{
     CL_LI = CL_LS = CL_SERVER_TIMEOUT = 100,
     //Vehicle Errors
     VH_LI = VH_LS = VH_CLIENT_ASSOCIATE = 200,
+    //Terminal errors (for)
+    TR_NOT_ENOUGH_FUNDS = 300,
+    TR_JUST_ENOUGH_FUNDS,
+    TR_CLIENT_NOT_FOUND,
 };
 
 // enumRange es el rango en donde hay enums definidos, donde se consideran
@@ -24,11 +29,12 @@ const int enumRange[] = {DB_LI, DB_LS, CL_LI, CL_LS, VH_LI, VH_LS};
 
 const std::string errLib[][99] = {
     {
-        //DATABASE_ERROR [000 - 099]
-        "Cliente no encontrado",        //000
-        "Vehiculo no encontrado",       //001
-        "Cliente existente",            //002
-        "Vehiculo existente",           //003
+        "OK",
+        //DATABASE_ERROR [001 - 099]
+        "Cliente no encontrado",
+        "Vehiculo no encontrado",
+        "Cliente existente",
+        "Vehiculo existente",
     },
     {
         //CLIENT_ERROR  [100 - 199]
@@ -37,6 +43,11 @@ const std::string errLib[][99] = {
     {
         //VEHICLE_ERROR  [200 - 299]
         "Este vehiculo ya tiene un cliente asociado"
+    },
+    {
+        //TERMINAL_ERROR [300 - 399]
+        // No tiene sentido que haya cadenas. La terminal no tiene pantalla.
+        "",
     }
 };
 
