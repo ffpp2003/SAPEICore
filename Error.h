@@ -4,6 +4,7 @@
 #include <string>
 
 enum errorCode{
+    OK,
     //Database errors
     DB_CLIENT_NOT_FOUND = 1,
     DB_VEHICLE_NOT_FOUND,
@@ -16,11 +17,12 @@ enum errorCode{
 
 const std::string errLib[][99] = {
     {
+        "OK",
         //DATABASE_ERROR [001 - 099]
-        "Cliente no encontrado",        //000
-        "Vehiculo no encontrado",       //001
-        "Cliente existente",            //002
-        "Vehiculo existente",           //003
+        "Cliente no encontrado",
+        "Vehiculo no encontrado",
+        "Cliente existente",
+        "Vehiculo existente",
     },
     {
         //CLIENT_ERROR  [100 - 199]
