@@ -15,6 +15,11 @@ enum errorCode{
     VH_CLIENT_ASSOCIATE = 200,
 };
 
+// enumRange es el rango en donde hay enums definidos, donde se consideran
+// pares de numeros para el rango, siendo el primero el limite inferior y
+// el segundo el limite superior (NO EXCLUYENTES). "errLib" debe siempre tener
+// cadenas definidas para los rangos de errores (si no hay cadena, debe ser vacia).
+const int enumRange[] = {0, 3, 100, 100, 200, 200, 300, 303};
 
 const std::string errLib[][99] = {
     {
@@ -35,9 +40,14 @@ const std::string errLib[][99] = {
 };
 
 inline std::string getErrMsg(int error){
-    int errType = error / 100;
-    int errId = error % 100;
-    return errLib[errType][errId];
+    for(int i = 0; i<(sizeof(enumRange)/sizeof(*enumRange)); i += 2) {
+        if(enumRange[i] <= error && enumRange[i+1] >= error){
+            int errType = error / 100;
+            int errId = error % 100;
+            return errLib[errType][errId];
+        }
+    }
+    return "NO_ERR_MSG";
 }
 
 #endif // ERRORS_H
