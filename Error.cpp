@@ -19,8 +19,10 @@ const std::string errLib[][99] = {
     },
     {
         //TERMINAL_ERROR [300 - 399]
-        // No tiene sentido que haya cadenas. La terminal no tiene pantalla.
-        "",
+        "TR_NOT_ENOUGH_FUNDS",
+        "TR_JUST_ENOUGH_FUNDS",
+        "TR_CLIENT_NOT_FOUND",
+        "TR_ERROR"
     }
 };
 
