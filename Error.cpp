@@ -20,6 +20,9 @@ const std::string errLib[][99] = {
     {
         //TERMINAL_ERROR [300 - 399]
         // No tiene sentido que haya cadenas. La terminal no tiene pantalla.
+        // Debe existir la cadena "" para que se ocupe el espacio y se pueda
+        // indexar el arreglo de strings.
+        ""
     }
 };
 
