@@ -24,6 +24,7 @@ enum errorCode{
     TR_NOT_ENOUGH_FUNDS = 300,
     TR_JUST_ENOUGH_FUNDS,
     TR_CLIENT_NOT_FOUND,
+    TR_ERROR
 };
 
 // enumRange es el rango en donde hay enums definidos, donde se consideran
