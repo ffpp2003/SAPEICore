@@ -1,7 +1,11 @@
 #ifndef ERRORS_H
 #define ERRORS_H
 
+#ifndef Arduino_h
 #include <string>
+#else
+#include <Arduino.h>
+#endif
 
 enum errorCode{
     OK,
@@ -32,11 +36,13 @@ enum errorCode{
 // el segundo el limite superior (NO EXCLUYENTES). "errLib" debe contener
 // al menos una cadena vacia para asignar un espacio en el arreglo. En caso
 // de no tener cadenas, el rango de aquellas debera ser excluido de enumRange
+#ifndef Arduino_h
 extern const int enumRange[];
 extern const std::string errLib[][99];
 
 bool checkEnumRange(int error);
 std::string getErrMsg(int error);
+#endif
 
 #endif // ERRORS_H
 
