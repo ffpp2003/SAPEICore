@@ -28,6 +28,7 @@ public:
     unsigned long long getId() const;
     double getBalance() const;
     std::vector<Vehicle> getVehicles() const;
+    std::string getName() const;
 
     void setId(unsigned long long id);
     void addVehicle(Vehicle vehicle);

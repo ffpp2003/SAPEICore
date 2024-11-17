@@ -20,6 +20,10 @@ unsigned long long Client::getId() const {
     return id;
 }
 
+std::string Client::getName() const{
+  return name;
+}
+
 double Client::getBalance() const {
     return balance;
 }
