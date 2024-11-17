@@ -15,6 +15,7 @@ class Client : public Person {
 friend std::ostream& operator<<(std::ostream& os, const Client& Client);
 
 private:
+    std::string name;
     unsigned long long id; /**<ID relacionado a la tarjeta RFID unica de cada cliente*/
     std::vector<Vehicle> vehicleVector; /**<Vector que almacena objetos con los datos del vehiculo*/
     double balance; /**<Lleva el saldo del cliente, en pesos argentinos*/

@@ -8,7 +8,7 @@ Client::Client(unsigned long long id, const std::string& name, unsigned int age,
                 const std::string& license, const std::string& type,
                 const std::string& color, const std::string& brand,
                 const std::string& model)
-    : Person(name, age, dni, address, email, phone), id(id){
+    : Person(name, age, dni, address, email, phone), id(id), name(name){
     balance = 0;
     if(license != ""){
       Vehicle firstVehicle(license, type, color, brand, model, id);
